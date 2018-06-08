@@ -12,10 +12,10 @@ void setup() {
   moonlander = Moonlander.initWithSoundtrack(this, "tekno_127bpm.mp3", 127, 8);
   moonlander.start("localhost", 9001, "syncdata.rocket");
   frameRate(60);
-  noiseSeed(0);
+  noiseSeed(123123);
 }
 
-void mousePointers(int count, float d) {
+void mousePointers(float size, int count, float d) {
   pushStyle();
   noStroke();
   for(int i = 0; i < count; ++i) {
@@ -28,6 +28,8 @@ void mousePointers(int count, float d) {
       fill(255, 0, 0);
     }
     translate(0, 0, d * ((float)i / Math.max(1.0, (float)count - 1.0) - 0.5));
+    scale(size / 140);
+    translate(-50, -70);
     beginShape();
     vertex(0, 0);
     vertex(100, 100);
@@ -45,6 +47,7 @@ void mousePointers(int count, float d) {
 void flyingPointerEffect() {
   float flyingPointerMovement = (float)moonlander.getValue("flyingPointerMovement");
   float flyingPointerDepth = (float)moonlander.getValue("flyingPointerDepth");
+  float flyingPointerSize = (float)moonlander.getValue("flyingPointerSize");
   float t = 0.2 * (float)moonlander.getCurrentTime();
   
   pushMatrix();
@@ -54,7 +57,7 @@ void flyingPointerEffect() {
   rotateY(y * noise(t, 3));
   rotateX(y * noise(t, 4));
   rotateZ(y * noise(t, 4));
-  mousePointers(7, flyingPointerDepth * (1 - cos(2 * (float)Math.PI * (0.375 + 0.125 * (float)moonlander.getCurrentRow()))));
+  mousePointers(flyingPointerSize, 7, flyingPointerDepth * 0.5 * (1 - cos(2 * (float)Math.PI * (0.375 + 0.125 * (float)moonlander.getCurrentRow()))));
   popMatrix();
 }
 
