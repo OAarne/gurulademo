@@ -1,9 +1,13 @@
-<sync rows="128">
+<sync rows="512">
 	<tracks>
-		<track name="t">
-			<key row="0" value="0" interpolation="0"/>
-			<key row="32" value="0" interpolation="3"/>
-			<key row="127" value="10" interpolation="0"/>
+		<track name="flyingPointerDepth">
+			<key row="0" interpolation="0" value="0"/>
+			<key row="32" interpolation="0" value="60"/>
+		</track>
+		<track name="flyingPointerMovement">
+			<key row="0" interpolation="0" value="0"/>
+			<key row="64" interpolation="2" value="0"/>
+			<key row="128" interpolation="0" value="1"/>
 		</track>
 	</tracks>
 	<bookmarks/>
