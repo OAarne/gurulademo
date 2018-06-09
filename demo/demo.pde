@@ -246,6 +246,13 @@ void boxTunnelEffect() {
   popMatrix();
   popStyle();
 }
+
+float cubicPulse( float c, float w, float x ){
+  x = abs(x - c);
+  if( x>w ) return 0.0;
+  x /= w;
+  return 1.0 - x*x*(3.0-2.0*x);
+}
     
 void cubeEffect() {
   pushStyle();
@@ -283,6 +290,7 @@ void cubeEffect() {
   }
   
   if(content == 1) {
+    t *= 0.6;
     for(int i = 0; i < 6; ++i) {
       PGraphics g = graphics[i];
       g.beginDraw();
@@ -326,7 +334,10 @@ void cubeEffect() {
           
           float h = 0.4 * cos(1.3 * u + 1.5 * v - 0.3 * w + 1.2 * t) - 0.7 * sin(1.5 * u + 1.1 * v + 0.3 * w - 1.5 * t) + 0.3 * cos(-0.7 * u + v + w + 3 * t) + 0.7 * t;
           
-          g.pixels[x + y * g.width] = hsvToRgb(h - Math.floor(h), 1, 0.5);
+          h *= 10;
+          float val = h - floor(h);
+          int ival = (int)(255 * (1.0 - cubicPulse(0.5, 0.2, val)));
+          g.pixels[x + y * g.width] = color(ival, ival, ival);
         }
       }
       g.updatePixels();
