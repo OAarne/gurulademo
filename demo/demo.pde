@@ -120,7 +120,7 @@ void flyingPointerEffect() {
     float t2 = t - 100 * i;
     pushMatrix();
     scale(blowup);
-    float x = movement * 400;
+    float x = movement * 1000;
     translate(2 * x * (noise(t2, 0) - 0.5), 2 * x * (noise(t2, 1) - 0.5), 2 * x * (noise(t2, 2) - 1));
     float y = movement * 5;
     rotateY(y * noise(t2, 3));
@@ -144,10 +144,7 @@ void draw() {
   moonlander.update();
   
   camera(0, 0, 1000, 0, 0, 0, 0, 1, 0);
-/*  translate(0.5 * width, 0.5 * height);
-  
-  scale(height / 1000.0);
-*/  background(0);
+  background(0);
   
   flyingPointerEffect();
 }
