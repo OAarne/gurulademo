@@ -232,9 +232,7 @@ void boxTunnelEffect() {
       
       box_d -= pulse * diameter / 3; // (diameter / map(ring_z, zStart, zEnd, 4, 1));
      
-      box_d *= (fadeout * (d+2) + 1);
-     
-      translate(0, box_d/2, 0);
+      translate(0, box_d/2 * (fadeout / 100 * (d+2) + 1), 0);
       
       box(PI * box_d / boxes_per_ring);
       //box(boxsize);
