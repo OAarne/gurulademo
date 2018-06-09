@@ -245,8 +245,10 @@ void cubeEffect() {
   pushStyle();
   pushMatrix();
   
-  pointLight(255, 255, 255, -1000, -1000, 1000);
+  directionalLight(255, 255, 255, 1, 1, -1);
   ambientLight(128, 128, 128);
+  
+  int content = moonlander.getIntValue("cubeContent");
   
   float t = (float)moonlander.getCurrentTime();
   rotateX(t);
@@ -256,39 +258,87 @@ void cubeEffect() {
   float measInt = (float)Math.floor(meas);
   float measFrac = meas - measInt;
   
-  PGraphics graphics = createGraphics(1000, 1000);
-  graphics.beginDraw();
-  graphics.rectMode(RADIUS);
-  graphics.background(100);
-  graphics.imageMode(CENTER);
-  graphics.translate(500, 500);
-  graphics.rotate(0.5 * (float)Math.PI * (measInt + measFrac * measFrac * (3 - 2 * measFrac)));
-  graphics.image(hourglass, 0, 0, 300, 300);
-  graphics.endDraw();
+  PGraphics graphics[] = new PGraphics[6];
+  for(int i = 0; i < 6; ++i) {
+    graphics[i] = createGraphics(100, 100);
+  }
+  
+  if(content == 0) {
+    for(int i = 0; i < 6; ++i) {
+      PGraphics g = graphics[i];
+      g.beginDraw();
+      g.background(100);
+      g.imageMode(CENTER);
+      g.translate(0.5 * g.width, 0.5 * g.height);
+      g.rotate(0.5 * (float)Math.PI * (measInt + measFrac * measFrac * (3 - 2 * measFrac)));
+      g.image(hourglass, 0, 0, 0.4 * g.width, 0.4 * g.width);
+      g.endDraw();
+    }
+  }
+  
+  if(content == 1) {
+    for(int i = 0; i < 6; ++i) {
+      PGraphics g = graphics[i];
+      g.beginDraw();
+      g.loadPixels();
+      for(int x = 0; x < g.width; ++x) {
+        for(int y = 0; y < g.height; ++y) {
+          g.pixels[x + y * g.width] = #000000;
+          
+          float A = (float)x / (float)g.width;
+          float B = (float)y / (float)g.width;
+          
+          float u, v, w;
+          u = A;
+          v = B;
+          w = 0;
+          if(i == 1) {
+            u = A;
+            v = 0;
+            w = 1 - B;
+          }
+          if(i == 2) {
+            u = A;
+            v = 1 - B;
+            w = 1;
+          }
+          if(i == 3) {
+            u = A;
+            v = 1;
+            w = B;
+          }
+          if(i == 4) {
+            u = 1;
+            v = B;
+            w = A;
+          }
+          if(i == 5) {
+            u = 0;
+            v = B;
+            w = 1 - A;
+          }
+          
+          float h = 0.4 * cos(1.3 * u + 1.5 * v - 0.3 * w + 1.2 * t) - 0.7 * sin(1.5 * u + 1.1 * v + 0.3 * w - 1.5 * t) + 0.3 * cos(-0.7 * u + v + w + 3 * t) + 0.7 * t;
+          
+          g.pixels[x + y * g.width] = hsvToRgb(h - Math.floor(h), 1, 0.5);
+        }
+      }
+      g.updatePixels();
+      g.endDraw();
+    }
+  }
   
   imageMode(CENTER);
   
-  for(int i = -1; i <= 1; i += 2) {
+  for(int i = 0; i < 6; ++i) {
     pushMatrix();
-    translate(0, 0, 275 * i);
-    scale(i, 1);
-    image(graphics, 0, 0, 550, 550);
-    popMatrix();
-  }
-  for(int i = -1; i <= 1; i += 2) {
-    pushMatrix();
-    rotateX(0.5 * (float)Math.PI);
-    translate(0, 0, 275 * i);
-    scale(i, 1);
-    image(graphics, 0, 0, 550, 550);
-    popMatrix();
-  }
-  for(int i = -1; i <= 1; i += 2) {
-    pushMatrix();
-    rotateY(0.5 * (float)Math.PI);
-    translate(0, 0, 275 * i);
-    scale(i, 1);
-    image(graphics, 0, 0, 550, 550);
+    if(i == 1) rotateX(0.5 * (float)Math.PI);
+    if(i == 2) rotateX((float)Math.PI);
+    if(i == 3) rotateX(-0.5 * (float)Math.PI);
+    if(i == 4) rotateY(0.5 * (float)Math.PI);
+    if(i == 5) rotateY(-0.5 * (float)Math.PI);
+    translate(0, 0, 275);
+    image(graphics[i], 0, 0, 550, 550);
     popMatrix();
   }
   
@@ -395,11 +445,114 @@ PImage sineWaveBoth(PImage img, int peaksUD, int h, int peaksLR, int w) {
   return newImg;
 }
 
+int clamp255(int v) {
+  if (v < 0) return 0;
+  if (v > 255) return 255;
+  return v;
+}
+
+PImage convolute(PImage img, int[] matrix, int divisor) {
+  PImage newImg = createImage(img.width, img.height, RGB);
+  img.loadPixels();
+
+  int[] DX = new int[] {-1,  0,  1, -1, 0, 1, -1, 0, 1};
+  int[] DY = new int[] {-1, -1, -1,  0, 0, 0,  1, 1, 1};
+
+  for (int y = 0; y < img.height; y++) {
+      for (int x = 0; x < img.width; x++) {
+
+          int[] comps = new int[3];
+          for (int i = 0; i < DX.length; i++) {
+              int rx = x + DX[i];
+              if (rx < 0)
+                rx = 0;
+              else if (rx >= img.width)
+                rx = img.width - 1;
+              int ry = y + DY[i];
+              if (ry < 0)
+                ry = 0;
+              else if (ry >= img.height)
+                ry = img.height - 1;
+
+              color px = img.pixels[img.width * ry + rx];
+              comps[0] += red(px) * matrix[i];
+              comps[1] += green(px) * matrix[i];
+              comps[2] += blue(px) * matrix[i];
+
+          }
+          newImg.pixels[y * img.width + x] = color(
+            clamp255(comps[0] / divisor),
+            clamp255(comps[1] / divisor),
+            clamp255(comps[2] / divisor));
+      }
+  }
+  return newImg;
+}
+
+PImage blur(PImage img) {
+    return convolute(img, new int[] { 3, 3, 3,
+                                      3, 8, 3,
+                                      3, 3, 3 }, 32);
+}
+
+PImage softenLess(PImage img) {
+    return convolute(img, new int[] { 0, 1, 0,
+                                      1, 2, 1,
+                                      0, 1, 0 }, 6);
+}
+
+PImage findEdges(PImage img) {
+    return convolute(img, new int[] { 1, 1, 1,
+                                      1,-2, 1,
+                                     -1,-1,-1 }, 1);
+}
+
 void drawTiled(PImage img) {
+  img.loadPixels();
   loadPixels();
   for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         pixels[y * width + x] = img.pixels[(y % img.height) * img.width + (x % img.width)];
+      }
+  }
+  updatePixels();
+}
+
+PImage blurredText;
+PImage enhancedText;
+
+void titleText() {
+  if (blurredText == null) {
+    PGraphics graphics = createGraphics(width, height);
+    graphics.beginDraw();
+    graphics.background(0);
+    graphics.fill(255);
+    graphics.textAlign(CENTER, TOP);
+
+    int ts = 10;
+    String str1 = "Graffathon";
+    String str2 = "Graffathon 2018";
+    for (int i = 0; i < 1000; i++, ts++) {
+      graphics.textSize(ts);
+      if (graphics.textWidth(str1) >= graphics.width)
+        break;
+    }
+    graphics.textSize(ts - 1);
+
+    graphics.text(str2, 0, 0, graphics.width, graphics.height);
+    graphics.endDraw();
+
+    blurredText = blur(blur(blur(graphics)));
+    enhancedText = findEdges(softenLess(graphics));
+  }
+
+  loadPixels();
+  for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        color blurredPx = blurredText.pixels[blurredText.width * y + x];
+        if (red(blurredPx) == 0 && green(blurredPx) == 0 && blue(blurredPx) == 0)
+          continue;
+        pixels[blurredText.width * y + x] = blurredPx;
       }
   }
   updatePixels();
@@ -415,7 +568,9 @@ void dezgegEffect() {
   int waterLR = (int)(moonlander.getValue("colorEffectWaterLR") * wh);
   int waterUD = (int)(moonlander.getValue("colorEffectWaterUD") * wh);
   img = waterWith(img, img, waterLR, waterUD);
+
   drawTiled(img);
+  titleText();
 }
 
 void wavesEffect() {

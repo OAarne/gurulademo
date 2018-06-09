@@ -102,6 +102,10 @@
 			<key row="856" value="0.3" interpolation="1"/>
 			<key row="943" value="0.4" interpolation="0"/>
 		</track>
+		<track name="cubeContent">
+			<key value="0" row="944" interpolation="0"/>
+			<key value="1" row="1008" interpolation="0"/>
+		</track>
 	</tracks>
 	<bookmarks/>
 </sync>
