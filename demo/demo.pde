@@ -294,12 +294,12 @@ PImage sineWaveBoth(PImage img, int peaksUD, int h, int peaksLR, int w) {
 
   for (int y = 0; y < img.height; y++) {
     for (int x = 0; x < img.width; x++) {
-      double dx = Math.sin(((double)y / img.height) * kLR) * img.width;
+      double dx = Math.sin(((double)y / img.height) * kLR) * w;
       int x2 = (int)Math.floor((x + dx) % img.width);
       if (x2 < 0)
         x2 += img.width;
 
-      double dy = Math.sin(((double)x / img.width) * kUD) * img.height;
+      double dy = Math.sin(((double)x / img.width) * kUD) * h;
       int y2 = (int)Math.floor((y + dy) % img.height);
       if (y2 < 0)
         y2 += img.height;
@@ -324,8 +324,13 @@ void drawTiled(PImage img) {
 void dezgegEffect() {
   int wh = Math.min(width, height) / 4;
   PImage img = colorWheel(wh, wh);
-  img = sineWaveBoth(img, 2, -100, 2, -100);
-  img = waterWith(img, img, (int)(-moonlander.getCurrentTime() * 1.2), (int)(moonlander.getCurrentTime() * 1.1));
+
+  int swWidth = (int)(moonlander.getValue("colorEffectSineWaveWidth") * wh);
+  int swHeight = (int)(moonlander.getValue("colorEffectSineWaveHeight") * wh);
+  img = sineWaveBoth(img, 2, swHeight, 2, swWidth);
+  int waterLR = (int)(moonlander.getValue("colorEffectWaterLR") * wh);
+  int waterUD = (int)(moonlander.getValue("colorEffectWaterUD") * wh);
+  img = waterWith(img, img, waterLR, waterUD);
   drawTiled(img);
 }
 
