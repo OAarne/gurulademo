@@ -114,7 +114,7 @@ void flyingPointerEffect() {
   float blowup = (float)moonlander.getValue("flyingPointerBlowUp");
   float t = 0.2 * (float)moonlander.getCurrentTime();
   
-  pointLight(255 * light, 255 * light, 255 * light, -1000, -1000, 0);
+  pointLight(255 * light, 255 * light, 255 * light, -1000, -1000, 1000);
   ambientLight(255 * (1 - light), 255 * (1 - light), 255 * (1 - light));
   
   for(int i = 1; i <= Math.ceil(count); ++i) {
