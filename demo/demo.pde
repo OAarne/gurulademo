@@ -1,6 +1,5 @@
 import moonlander.library.*;
 import ddf.minim.*;
-import java.util.logging.*;
 
 Moonlander moonlander;
 
