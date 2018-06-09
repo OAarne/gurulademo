@@ -110,6 +110,7 @@ void flyingPointerEffect() {
   int type = moonlander.getIntValue("flyingPointerType");
   float light = (float)moonlander.getValue("flyingPointerLightIntensity");
   float count = (float)moonlander.getValue("flyingPointerCount");
+  float blowup = (float)moonlander.getValue("flyingPointerBlowUp");
   float t = 0.2 * (float)moonlander.getCurrentTime();
   
   pointLight(255 * light, 255 * light, 255 * light, -1000, -1000, 0);
@@ -118,21 +119,22 @@ void flyingPointerEffect() {
   for(int i = 1; i <= Math.ceil(count); ++i) {
     float t2 = t - 100 * i;
     pushMatrix();
-    float x = movement * 300;
-    translate(2 * x * (noise(t2, 0) - 0.5), 2 * x * (noise(t2, 1) - 0.5), 2 * x * (noise(t2, 2) - 0.5));
+    scale(blowup);
+    float x = movement * 400;
+    translate(2 * x * (noise(t2, 0) - 0.5), 2 * x * (noise(t2, 1) - 0.5), 2 * x * (noise(t2, 2) - 1));
     float y = movement * 5;
     rotateY(y * noise(t2, 3));
     rotateX(y * noise(t2, 4));
     rotateZ(y * noise(t2, 4));
     float d = depth * 0.5 * (1 - cos(2 * (float)Math.PI * (0.375 + 0.125 * (float)moonlander.getCurrentRow())));
-    float size2 = size;
+    float coef = 1;
     if((float)i > count) {
-      size2 = size * (1 - ((float)i - count));
+      coef = (1 - ((float)i - count));
     }
     if(type == 0) {
-      mousePointers(size2, 7, d);
+      mousePointers(coef * size, 7, coef * d);
     } else {
-      mousePointer3D(size2, d);
+      mousePointer3D(coef * size, coef * d);
     }
     popMatrix();
   }
@@ -141,9 +143,11 @@ void flyingPointerEffect() {
 void draw() {  
   moonlander.update();
   
-  translate(0.5 * width, 0.5 * height);
+  camera(0, 0, 1000, 0, 0, 0, 0, 1, 0);
+/*  translate(0.5 * width, 0.5 * height);
+  
   scale(height / 1000.0);
-  background(0);
+*/  background(0);
   
   flyingPointerEffect();
 }
