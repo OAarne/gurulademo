@@ -118,8 +118,8 @@
 			<key row="1792" value="900" interpolation="0"/>
 		</track>
 		<track name="tunnel_out">
-			<key row="2256" value="0" interpolation="2"/>
-			<key row="2304" value="70" interpolation="0"/>
+			<key row="2256" value="0" interpolation="3"/>
+			<key row="2304" value="1" interpolation="0"/>
 		</track>
 		<track name="fade">
 			<key row="0" value="1" interpolation="0"/>

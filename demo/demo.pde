@@ -196,7 +196,7 @@ void boxTunnelEffect() {
   light_beet = (beat + 3) % 6;
   pointLight(255 * light_r, 255 * light_g, 255 * light_b, 0, 0, 2000 - 80 * light_beet * light_beet);
   
-  float fadeout = moonlander.getIntValue("tunnel_out");
+  float fadeout = (float) moonlander.getValue("tunnel_out") * 60;
   
   background(0);
   
