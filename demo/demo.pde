@@ -787,19 +787,31 @@ void puu(float x, float y, float dist, float d) {
   translate(0,-p,0);
 }
 
+String space = "                                                         ";
+String credits =
+  "Music: 'Rhinoceros' by Kevin MacLeod (CC BY 3.0). " + space +
+  "Greetings to: all fuksipallerot and n:th year students of Gurula. " + space +
+//  "Fuckings to: Alepa Otaniemi for not having PowerKing!" + space +
+  "Team Gurula";
+
 void treeEffect() {
   pushStyle();
   pushMatrix();
   
+  float curParam = (float)moonlander.getValue("treeCursorParam");
+  float curParam2 = curParam * curParam;
+  
+  textSize(100);
+  float fadeout = Math.min(map(curParam, 0.9, 1, 1, 0), 1);
+  fill(255 * fadeout);
+  text(credits, 900 - (textWidth(credits) + 700) * curParam, -300);
+  
   rotateX(-10.0 / 360 * 2 * PI);
   
-  float curParam = (float)moonlander.getValue("treeCursorParam");
-  curParam = curParam * curParam;
-  
   pushMatrix();
-  translate(0, -100, 950 - 2500 * curParam);
-  rotateX((1 - curParam) * 0.5 * (float)Math.PI);
-  rotateZ((1 - curParam * curParam) * 0.35);
+  translate(0, -100, 950 - 2500 * curParam2);
+  rotateX((1 - curParam2) * 0.5 * (float)Math.PI);
+  rotateZ((1 - curParam2 * curParam2) * 0.35);
   mousePointer3D(50, 5);
   popMatrix();
   
@@ -823,7 +835,7 @@ void treeEffect() {
       float dz = 50*(j + nz);
       
       translate(dx, 0, dz);
-      stroke(map(j, j1, j2, 0, 255) * Math.min(map(curParam, 0.95, 1, 1, 0), 1));
+      stroke(map(j, j1, j2, 0, 255) * fadeout);
       strokeWeight(height / 480);
       puu(i,j,dz,1);    
       translate(-dx, 0, -dz);
