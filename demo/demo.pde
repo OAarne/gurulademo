@@ -35,7 +35,7 @@ PVector[] initMousePointerCoords() {
 }
 PVector[] mousePointerCoords = initMousePointerCoords();
 
-void mousePointers(float size, int count, float d) {
+void mousePointers(float size, int count, float r) {
   pushStyle();
   noStroke();
   for(int i = 0; i < count; ++i) {
@@ -47,7 +47,7 @@ void mousePointers(float size, int count, float d) {
     } else {
       fill(255, 0, 0);
     }
-    translate(0, 0, d * ((float)i / Math.max(1.0, (float)count - 1.0) - 0.5));
+    translate(0, 0, 2 * r * ((float)i / Math.max(1.0, (float)count - 1.0) - 0.5));
     scale(size);
     beginShape();
     for(PVector v : mousePointerCoords) {
@@ -59,7 +59,7 @@ void mousePointers(float size, int count, float d) {
   popStyle();
 }
 
-void mousePointer3D(float size, float d) {
+void mousePointer3D(float size, float r) {
   pushStyle();
   noStroke();
   
@@ -67,7 +67,7 @@ void mousePointer3D(float size, float d) {
   fill(255, 255, 255);
   for(int i = -1; i <= 1; i += 2) {
     pushMatrix();
-    translate(0, 0, 0.5 * d * i);
+    translate(0, 0, r * i);
     scale(size);
     beginShape();
     for(PVector v : mousePointerCoords) {
@@ -89,7 +89,7 @@ void mousePointer3D(float size, float d) {
       fill(255, 0, 0);
     }
     beginShape();
-    float u = 0.5 * d / Math.max(size, 1.0);
+    float u = r / Math.max(size, 1.0);
     vertex(prev.x, prev.y, u);
     vertex(cur.x, cur.y, u);
     vertex(cur.x, cur.y, -u);
