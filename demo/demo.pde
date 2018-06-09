@@ -121,8 +121,8 @@ void flyingPointerEffect() {
     float t2 = t - 100 * i;
     pushMatrix();
     scale(blowup);
-    float x = movement * 1000;
-    translate(2 * x * (noise(t2, 0) - 0.5), 2 * x * (noise(t2, 1) - 0.5), 2 * x * (noise(t2, 2) - 1));
+    float x = movement * 600;
+    translate(2 * x * (noise(t2, 0) - 0.5), 2 * x * (noise(t2, 1) - 0.5), 2 * x * (noise(t2, 2) - 0.5));
     float y = movement * 5;
     rotateY(y * noise(t2, 3));
     rotateX(y * noise(t2, 4));
