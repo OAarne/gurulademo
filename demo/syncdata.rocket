@@ -1,4 +1,4 @@
-<sync rows="4096">
+<sync rows="2816">
 	<tracks>
 		<track name="effect">
 			<key interpolation="0" row="0" value="0"/>
@@ -138,6 +138,7 @@
 		</track>
 		<track name="treeCursorParam">
 			<key interpolation="1" row="2304" value="0"/>
+			<key interpolation="0" row="2815" value="1"/>
 			<key interpolation="0" row="2816" value="1"/>
 		</track>
 	</tracks>
