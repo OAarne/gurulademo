@@ -5,6 +5,8 @@ Moonlander moonlander;
 
 void settings() {
   size(640, 480, P3D);
+  //size(1920, 1080, P3D);
+  //fullScreen();
 }
 
 PImage hourglass;
@@ -16,6 +18,8 @@ void setup() {
   noiseSeed(1337);
   
   hourglass = loadImage("hourglass.png");
+  
+  noCursor();
 }
 
 PVector[] initMousePointerCoords() {
@@ -197,14 +201,14 @@ void boxTunnelEffect() {
   
   background(0);
   
-  float diameter = 200;
+  float diameter = 270;
   float jaggyness = 100;
   float boxes_per_ring = 15;
   float boxsize = PI * diameter / boxes_per_ring;
   float depth = 100; 
   
-  float zStart = 1000;
-  float zEnd = zStart - boxsize * depth;
+  float zStart = 1200;
+  //float zEnd = zStart - boxsize * depth;
   
   //translate(0, 0, -time*100);
     
