@@ -418,17 +418,66 @@ void dezgegEffect() {
   drawTiled(img);
 }
 
+void wavesEffect() {
+  pushStyle();
+  pushMatrix();
+  
+  noStroke();
+  
+  int zoom = moonlander.getIntValue("waves_zoom");
+  
+  float light_r = 0.5;
+  float light_g = 0.1;
+  float light_b = 1.0;
+  
+  float ambient = 0.8;
+  ambientLight(255 * (1 - ambient), 255 * (1 - ambient), 255 * (1 - ambient));
+  
+  lightFalloff(1, 0, 0.00001 / zoom);
+ 
+  translate(0, 0, zoom);
+ 
+  pointLight(255 * light_r, 255 * light_g, 255 * light_b, 0.0, 0.0, 200.0);
+  
+  float time = (float)moonlander.getCurrentTime();
+  float beat = (float)moonlander.getCurrentRow();
+  
+  float boxSize = 30;
+  
+  float pulse = pow(((1 + sin(beat)) / 2), 2);
+  
+  for (int x = -40; x < 40; ++x) {
+    for (int y = -30; y < 30; ++y) {
+      pushMatrix();
+      
+      float z_wave = pow((1 + sin(sqrt(x*x + y*y) + beat/2)) / 2, 4);
+      
+      translate(x * boxSize, y * boxSize, noise(x, y, time)*20 + z_wave * 30);
+      
+      translate(-x * boxSize * (zoom - 1)/1000, -y * boxSize * (zoom - 1)/1000, -pow((zoom - 1)/sqrt(x*x + y*y),1.2) );
+      
+      box(boxSize * 2* (1 - 2* noise(x+40,y+30)));
+      
+      popMatrix();
+    }
+  }
+  
+   popMatrix();
+   popStyle();
+}
+
 void draw() {  
   moonlander.update();
   
   camera(0, 0, 1000, 0, 0, 0, 0, 1, 0);
   background(0);
-
-  
+ 
   int effect = moonlander.getIntValue("effect");
+ 
   if(effect == 0) flyingPointerEffect();
   if(effect == 1) dezgegEffect();
   if(effect == 2) cubeEffect();
-  if(effect == 3) boxTunnelEffect();
-  if(effect == 4) creditsEffect();
+  if(effect == 3) wavesEffect();
+  if(effect == 4) boxTunnelEffect();
+  if(effect == 5) creditsEffect();
 }
