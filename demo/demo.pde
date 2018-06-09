@@ -12,7 +12,7 @@ void setup() {
   moonlander = Moonlander.initWithSoundtrack(this, "tekno_127bpm.mp3", 127, 8);
   moonlander.start("localhost", 9001, "syncdata.rocket");
   frameRate(60);
-  noiseSeed(123123);
+  noiseSeed(1337);
 }
 
 PVector[] initMousePointerCoords() {
@@ -109,25 +109,33 @@ void flyingPointerEffect() {
   float size = (float)moonlander.getValue("flyingPointerSize");
   int type = moonlander.getIntValue("flyingPointerType");
   float light = (float)moonlander.getValue("flyingPointerLightIntensity");
+  float count = (float)moonlander.getValue("flyingPointerCount");
   float t = 0.2 * (float)moonlander.getCurrentTime();
   
   pointLight(255 * light, 255 * light, 255 * light, -1000, -1000, 0);
   ambientLight(255 * (1 - light), 255 * (1 - light), 255 * (1 - light));
   
-  pushMatrix();
-  float x = movement * 300;
-  translate(2 * x * (noise(t, 0) - 0.5), 2 * x * (noise(t, 1) - 0.5), 2 * x * (noise(t, 2) - 0.5));
-  float y = movement * 10;
-  rotateY(y * noise(t, 3));
-  rotateX(y * noise(t, 4));
-  rotateZ(y * noise(t, 4));
-  float d = depth * 0.5 * (1 - cos(2 * (float)Math.PI * (0.375 + 0.125 * (float)moonlander.getCurrentRow())));
-  if(type == 0) {
-    mousePointers(size, 7, d);
-  } else {
-    mousePointer3D(size, d);
+  for(int i = 1; i <= Math.ceil(count); ++i) {
+    float t2 = t - 100 * i;
+    pushMatrix();
+    float x = movement * 300;
+    translate(2 * x * (noise(t2, 0) - 0.5), 2 * x * (noise(t2, 1) - 0.5), 2 * x * (noise(t2, 2) - 0.5));
+    float y = movement * 5;
+    rotateY(y * noise(t2, 3));
+    rotateX(y * noise(t2, 4));
+    rotateZ(y * noise(t2, 4));
+    float d = depth * 0.5 * (1 - cos(2 * (float)Math.PI * (0.375 + 0.125 * (float)moonlander.getCurrentRow())));
+    float size2 = size;
+    if((float)i > count) {
+      size2 = size * (1 - ((float)i - count));
+    }
+    if(type == 0) {
+      mousePointers(size2, 7, d);
+    } else {
+      mousePointer3D(size2, d);
+    }
+    popMatrix();
   }
-  popMatrix();
 }
 
 void draw() {  

@@ -7,12 +7,14 @@
 		<track name="flyingPointerMovement">
 			<key row="0" interpolation="0" value="0"/>
 			<key row="128" interpolation="2" value="0"/>
-			<key row="192" interpolation="0" value="1"/>
+			<key row="192" interpolation="0" value="2"/>
 		</track>
 		<track name="flyingPointerSize">
 			<key row="0" interpolation="0" value="30"/>
 			<key row="64" interpolation="2" value="30"/>
 			<key row="128" interpolation="0" value="200"/>
+			<key row="256" interpolation="2" value="200"/>
+			<key row="511" interpolation="0" value="100"/>
 		</track>
 		<track name="flyingPointerType">
 			<key row="256" interpolation="0" value="1"/>
@@ -21,6 +23,11 @@
 			<key row="0" interpolation="0" value="0"/>
 			<key row="256" interpolation="2" value="0"/>
 			<key row="511" interpolation="0" value="0.6"/>
+		</track>
+		<track name="flyingPointerCount">
+			<key row="0" interpolation="0" value="1"/>
+			<key row="320" interpolation="1" value="1"/>
+			<key row="511" interpolation="0" value="20"/>
 		</track>
 	</tracks>
 	<bookmarks/>
