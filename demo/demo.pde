@@ -212,6 +212,123 @@ void cubeEffect() {
   popStyle();
 }
 
+color hsvToRgb(double h, double s, double v) {
+    int i = (int)(h * 6);
+    double f = h * 6 - i;
+    double p = v * (1.0 - s);
+    double q = v * (1.0 - f * s);
+    double t = v * (1.0 - (1.0 - f) * s);
+
+    double r = 0.0, g = 0.0, b = 0.0;
+    switch (i % 6) {
+        case 0: r = v; g = t; b = p; break;
+        case 1: r = q; g = v; b = p; break;
+        case 2: r = p; g = v; b = t; break;
+        case 3: r = p; g = q; b = v; break;
+        case 4: r = t; g = p; b = v; break;
+        case 5: r = v; g = p; b = q; break;
+    }
+    return color(Math.round(r * 255), Math.round(g * 255), Math.round(b * 255));
+}
+
+PImage colorWheel(int w, int h) {
+  PImage img = createImage(w, h, RGB);
+  img.loadPixels();
+  int midX = img.width / 2;
+  int midY = img.height / 2;
+
+  int radius = midX;
+  int halfRadius = radius / 2;
+
+  for (int y = 0; y < img.height; y++) {
+      for (int x = 0; x < img.width; x++) {
+          double d = Math.sqrt(Math.pow((double)(x - midX), 2.0) + Math.pow((double)(y - midY), 2.0));
+          if (d > radius) {
+              img.pixels[y * img.width + x] = color(0, 0, 0);
+              continue;
+          }
+
+          int dx = x - midX;
+          int dy = y - midY;
+          double normAngle = (atan2(dx, dy) - Math.PI) / (-2.0 * Math.PI);
+
+          double saturation = d < halfRadius ? d / halfRadius : 1.0;
+          double value = d < halfRadius ? 1.0 : (radius - d) / halfRadius;
+          img.pixels[y * img.width + x] = hsvToRgb(normAngle, saturation, value);
+      }
+  }
+  img.updatePixels();
+  return img;
+}
+
+PImage waterWith(PImage img, PImage other, int lrAmount, int udAmount) {
+  PImage newImg = createImage(img.width, img.height, RGB);
+
+  img.loadPixels();
+  other.loadPixels();
+
+  for (int y = 0; y < img.height; y++) {
+    for (int x = 0; x < img.width; x++) {
+      color col = other.pixels[y * img.width + x];
+      double diff = Math.max(Math.max(red(col), green(col)), blue(col));
+
+      int nx = (int)Math.round((1.0 + diff / 255.0) * lrAmount + x) % img.width;
+      if (nx < 0)
+        nx += img.width;
+      int ny = (int)Math.round((1.0 + diff / 255.0) * udAmount + y) % img.height;
+      if (ny < 0)
+        ny += img.height;
+      newImg.pixels[y * img.width + x] = img.pixels[ny * img.width + nx];
+    }
+  }
+  newImg.updatePixels();
+  return newImg;
+}
+
+PImage sineWaveBoth(PImage img, int peaksUD, int h, int peaksLR, int w) {
+  PImage newImg = createImage(img.width, img.height, RGB);
+  img.loadPixels();
+
+  double kUD = peaksUD * PI;
+  double kLR = peaksLR * PI;
+
+  for (int y = 0; y < img.height; y++) {
+    for (int x = 0; x < img.width; x++) {
+      double dx = Math.sin(((double)y / img.height) * kLR) * img.width;
+      int x2 = (int)Math.floor((x + dx) % img.width);
+      if (x2 < 0)
+        x2 += img.width;
+
+      double dy = Math.sin(((double)x / img.width) * kUD) * img.height;
+      int y2 = (int)Math.floor((y + dy) % img.height);
+      if (y2 < 0)
+        y2 += img.height;
+
+      newImg.pixels[y * img.width + x] = img.pixels[y2 * img.width + x2];
+    }
+  }
+  newImg.updatePixels();
+  return newImg;
+}
+
+void drawTiled(PImage img) {
+  loadPixels();
+  for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        pixels[y * width + x] = img.pixels[(y % img.height) * img.width + (x % img.width)];
+      }
+  }
+  updatePixels();
+}
+
+void dezgegEffect() {
+  int wh = Math.min(width, height) / 4;
+  PImage img = colorWheel(wh, wh);
+  img = sineWaveBoth(img, 2, -100, 2, -100);
+  img = waterWith(img, img, (int)(-moonlander.getCurrentTime() * 1.2), (int)(moonlander.getCurrentTime() * 1.1));
+  drawTiled(img);
+}
+
 void draw() {  
   moonlander.update();
   
@@ -220,6 +337,7 @@ void draw() {
   
   int effect = moonlander.getIntValue("effect");
   if(effect == 0) flyingPointerEffect();
-  if(effect == 1) creditsEffect();
+  if(effect == 1) dezgegEffect();
   if(effect == 2) cubeEffect();
+  if(effect == 3) creditsEffect();
 }
