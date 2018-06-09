@@ -7,11 +7,15 @@ void settings() {
   size(640, 480, P3D);
 }
 
+PImage hourglass;
+
 void setup() {
   moonlander = Moonlander.initWithSoundtrack(this, "tekno_127bpm.mp3", 127, 8);
   moonlander.start();
   frameRate(60);
   noiseSeed(1337);
+  
+  hourglass = loadImage("hourglass.png");
 }
 
 PVector[] initMousePointerCoords() {
@@ -173,13 +177,18 @@ void cubeEffect() {
   rotateX(t);
   rotateY(1.3 * t);
   
+  float meas = (float)moonlander.getCurrentRow() / 8;
+  float measInt = (float)Math.floor(meas);
+  float measFrac = meas - measInt;
+  
   PGraphics graphics = createGraphics(1000, 1000);
   graphics.beginDraw();
   graphics.rectMode(RADIUS);
   graphics.background(100);
-  graphics.fill(255, 0, 0);
-  graphics.textSize(100);
-  graphics.text("ÄÄH", 500, 500);
+  graphics.imageMode(CENTER);
+  graphics.translate(500, 500);
+  graphics.rotate(0.5 * (float)Math.PI * (measInt + measFrac * measFrac * (3 - 2 * measFrac)));
+  graphics.image(hourglass, 0, 0, 300, 300);
   graphics.endDraw();
   
   imageMode(CENTER);
