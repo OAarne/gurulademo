@@ -445,11 +445,114 @@ PImage sineWaveBoth(PImage img, int peaksUD, int h, int peaksLR, int w) {
   return newImg;
 }
 
+int clamp255(int v) {
+  if (v < 0) return 0;
+  if (v > 255) return 255;
+  return v;
+}
+
+PImage convolute(PImage img, int[] matrix, int divisor) {
+  PImage newImg = createImage(img.width, img.height, RGB);
+  img.loadPixels();
+
+  int[] DX = new int[] {-1,  0,  1, -1, 0, 1, -1, 0, 1};
+  int[] DY = new int[] {-1, -1, -1,  0, 0, 0,  1, 1, 1};
+
+  for (int y = 0; y < img.height; y++) {
+      for (int x = 0; x < img.width; x++) {
+
+          int[] comps = new int[3];
+          for (int i = 0; i < DX.length; i++) {
+              int rx = x + DX[i];
+              if (rx < 0)
+                rx = 0;
+              else if (rx >= img.width)
+                rx = img.width - 1;
+              int ry = y + DY[i];
+              if (ry < 0)
+                ry = 0;
+              else if (ry >= img.height)
+                ry = img.height - 1;
+
+              color px = img.pixels[img.width * ry + rx];
+              comps[0] += red(px) * matrix[i];
+              comps[1] += green(px) * matrix[i];
+              comps[2] += blue(px) * matrix[i];
+
+          }
+          newImg.pixels[y * img.width + x] = color(
+            clamp255(comps[0] / divisor),
+            clamp255(comps[1] / divisor),
+            clamp255(comps[2] / divisor));
+      }
+  }
+  return newImg;
+}
+
+PImage blur(PImage img) {
+    return convolute(img, new int[] { 3, 3, 3,
+                                      3, 8, 3,
+                                      3, 3, 3 }, 32);
+}
+
+PImage softenLess(PImage img) {
+    return convolute(img, new int[] { 0, 1, 0,
+                                      1, 2, 1,
+                                      0, 1, 0 }, 6);
+}
+
+PImage findEdges(PImage img) {
+    return convolute(img, new int[] { 1, 1, 1,
+                                      1,-2, 1,
+                                     -1,-1,-1 }, 1);
+}
+
 void drawTiled(PImage img) {
+  img.loadPixels();
   loadPixels();
   for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         pixels[y * width + x] = img.pixels[(y % img.height) * img.width + (x % img.width)];
+      }
+  }
+  updatePixels();
+}
+
+PImage blurredText;
+PImage enhancedText;
+
+void titleText() {
+  if (blurredText == null) {
+    PGraphics graphics = createGraphics(width, height);
+    graphics.beginDraw();
+    graphics.background(0);
+    graphics.fill(255);
+    graphics.textAlign(CENTER, TOP);
+
+    int ts = 10;
+    String str1 = "Graffathon";
+    String str2 = "Graffathon 2018";
+    for (int i = 0; i < 1000; i++, ts++) {
+      graphics.textSize(ts);
+      if (graphics.textWidth(str1) >= graphics.width)
+        break;
+    }
+    graphics.textSize(ts - 1);
+
+    graphics.text(str2, 0, 0, graphics.width, graphics.height);
+    graphics.endDraw();
+
+    blurredText = blur(blur(blur(graphics)));
+    enhancedText = findEdges(softenLess(graphics));
+  }
+
+  loadPixels();
+  for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        color blurredPx = blurredText.pixels[blurredText.width * y + x];
+        if (red(blurredPx) == 0 && green(blurredPx) == 0 && blue(blurredPx) == 0)
+          continue;
+        pixels[blurredText.width * y + x] = blurredPx;
       }
   }
   updatePixels();
@@ -465,7 +568,9 @@ void dezgegEffect() {
   int waterLR = (int)(moonlander.getValue("colorEffectWaterLR") * wh);
   int waterUD = (int)(moonlander.getValue("colorEffectWaterUD") * wh);
   img = waterWith(img, img, waterLR, waterUD);
+
   drawTiled(img);
+  titleText();
 }
 
 void draw() {  
