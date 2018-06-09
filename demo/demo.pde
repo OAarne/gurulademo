@@ -108,7 +108,11 @@ void flyingPointerEffect() {
   float depth = (float)moonlander.getValue("flyingPointerDepth");
   float size = (float)moonlander.getValue("flyingPointerSize");
   int type = moonlander.getIntValue("flyingPointerType");
+  float light = (float)moonlander.getValue("flyingPointerLightIntensity");
   float t = 0.2 * (float)moonlander.getCurrentTime();
+  
+  pointLight(255 * light, 255 * light, 255 * light, -1000, -1000, 0);
+  ambientLight(255 * (1 - light), 255 * (1 - light), 255 * (1 - light));
   
   pushMatrix();
   float x = movement * 300;
