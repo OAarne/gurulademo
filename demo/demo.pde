@@ -59,20 +59,70 @@ void mousePointers(float size, int count, float d) {
   popStyle();
 }
 
+void mousePointer3D(float size, float d) {
+  pushStyle();
+  noStroke();
+  
+  // Bottom & top
+  fill(255, 255, 255);
+  for(int i = -1; i <= 1; i += 2) {
+    pushMatrix();
+    translate(0, 0, 0.5 * d * i);
+    scale(size);
+    beginShape();
+    for(PVector v : mousePointerCoords) {
+      vertex(v.x, v.y);
+    }
+    endShape();
+    popMatrix();
+  }
+  
+  // Laidat
+  pushMatrix();
+  scale(size);
+  PVector prev = mousePointerCoords[mousePointerCoords.length - 1];
+  int idx = 0;
+  for(PVector cur : mousePointerCoords) {
+    if(idx % 2 == 0) {
+      fill(0, 255, 255);
+    } else {
+      fill(255, 0, 0);
+    }
+    beginShape();
+    float u = 0.5 * d / Math.max(size, 1.0);
+    vertex(prev.x, prev.y, u);
+    vertex(cur.x, cur.y, u);
+    vertex(cur.x, cur.y, -u);
+    vertex(prev.x, prev.y, -u);
+    endShape();
+    prev = cur;
+    ++idx;
+  }
+  popMatrix();
+  
+  popStyle();
+}
+
 void flyingPointerEffect() {
-  float flyingPointerMovement = (float)moonlander.getValue("flyingPointerMovement");
-  float flyingPointerDepth = (float)moonlander.getValue("flyingPointerDepth");
-  float flyingPointerSize = (float)moonlander.getValue("flyingPointerSize");
+  float movement = (float)moonlander.getValue("flyingPointerMovement");
+  float depth = (float)moonlander.getValue("flyingPointerDepth");
+  float size = (float)moonlander.getValue("flyingPointerSize");
+  int type = moonlander.getIntValue("flyingPointerType");
   float t = 0.2 * (float)moonlander.getCurrentTime();
   
   pushMatrix();
-  float x = flyingPointerMovement * 300;
+  float x = movement * 300;
   translate(2 * x * (noise(t, 0) - 0.5), 2 * x * (noise(t, 1) - 0.5), 2 * x * (noise(t, 2) - 0.5));
-  float y = flyingPointerMovement * 10;
+  float y = movement * 10;
   rotateY(y * noise(t, 3));
   rotateX(y * noise(t, 4));
   rotateZ(y * noise(t, 4));
-  mousePointers(flyingPointerSize, 7, flyingPointerDepth * 0.5 * (1 - cos(2 * (float)Math.PI * (0.375 + 0.125 * (float)moonlander.getCurrentRow()))));
+  float d = depth * 0.5 * (1 - cos(2 * (float)Math.PI * (0.375 + 0.125 * (float)moonlander.getCurrentRow())));
+  if(type == 0) {
+    mousePointers(size, 7, d);
+  } else {
+    mousePointer3D(size, d);
+  }
   popMatrix();
 }
 
