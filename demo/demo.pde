@@ -701,14 +701,14 @@ void dezgegEffect() {
 }
 
 void doFade(float amount) {
-  loadPixels();
-  for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        color c = pixels[y * width + x];
-        pixels[y * width + x] = color(amount * red(c), amount * green(c), amount * blue(c));
-      }
-  }
-  updatePixels();
+  //loadPixels();
+  //for (int y = 0; y < height; y++) {
+  //    for (int x = 0; x < width; x++) {
+  //      color c = pixels[y * width + x];
+  //      pixels[y * width + x] = color(amount * red(c), amount * green(c), amount * blue(c));
+  //    }
+  //}
+  //updatePixels();
 }
 
 void wavesEffect() {
