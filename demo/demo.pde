@@ -623,6 +623,14 @@ PImage findEdges(PImage img) {
                                      -1,-1,-1 }, 1);
 }
 
+color alphaBlend(color c1, color c2, float alpha) {
+  return color(
+    int(red(c1) * alpha + red(c2) * (1.0 - alpha)),
+    int(green(c1) * alpha + green(c2) * (1.0 - alpha)),
+    int(blue(c1) * alpha + blue(c2) * (1.0 - alpha))
+  );
+}
+
 void drawTiled(PImage img) {
   img.loadPixels();
   loadPixels();
@@ -635,7 +643,6 @@ void drawTiled(PImage img) {
 }
 
 PImage blurredText;
-PImage enhancedText;
 
 void titleText() {
   if (blurredText == null) {
@@ -645,22 +652,24 @@ void titleText() {
     graphics.fill(255);
     graphics.textAlign(CENTER, TOP);
 
-    int ts = 10;
     String str1 = "Graffathon";
     String str2 = "Graffathon 2018";
-    for (int i = 0; i < 1000; i++, ts++) {
+
+    int ts = 369;
+    for (int i = 0; i < 10; i++, ts--) {
       graphics.textSize(ts);
-      if (graphics.textWidth(str1) >= graphics.width)
+      if (graphics.textWidth(str1) < graphics.width)
         break;
     }
-    graphics.textSize(ts - 1);
+    graphics.textSize(ts);
 
     graphics.text(str2, 0, 0, graphics.width, graphics.height);
     graphics.endDraw();
 
-    blurredText = blur(blur(blur(graphics)));
-    enhancedText = findEdges(softenLess(graphics));
+    blurredText = blur(blur(graphics));
   }
+
+  float textAlpha = (float)moonlander.getValue("titleTextAlpha");
 
   loadPixels();
   for (int y = 0; y < height; y++) {
@@ -668,7 +677,7 @@ void titleText() {
         color blurredPx = blurredText.pixels[blurredText.width * y + x];
         if (red(blurredPx) == 0 && green(blurredPx) == 0 && blue(blurredPx) == 0)
           continue;
-        pixels[blurredText.width * y + x] = blurredPx;
+        pixels[blurredText.width * y + x] = alphaBlend(blurredPx, pixels[blurredText.width * y + x], textAlpha);
       }
   }
   updatePixels();

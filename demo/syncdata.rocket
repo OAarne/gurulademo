@@ -134,6 +134,10 @@
 			<key value="0" interpolation="1" row="1120"/>
 			<key value="1" interpolation="0" row="1121"/>
 		</track>
+		<track name="titleTextAlpha">
+			<key row="888" interpolation="1" value="0"/>
+			<key row="896" interpolation="0" value="1"/>
+		</track>
 	</tracks>
 	<bookmarks/>
 </sync>
