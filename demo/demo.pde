@@ -9,7 +9,7 @@ void settings() {
 
 void setup() {
   moonlander = Moonlander.initWithSoundtrack(this, "tekno_127bpm.mp3", 127, 8);
-  moonlander.start("localhost", 9001, "syncdata.rocket");
+  moonlander.start();
   frameRate(60);
   noiseSeed(1337);
 }
