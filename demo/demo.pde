@@ -149,6 +149,8 @@ void creditsEffect() {
   pushStyle();
   pushMatrix();
   
+  background(0, 0, 0);
+  
   float pos = (float)moonlander.getValue("creditsPos");
   translate(0, -pos);
   String text =
@@ -191,6 +193,8 @@ void boxTunnelEffect() {
   light_beet = (beat + 3) % 6;
   pointLight(255 * light_r, 255 * light_g, 255 * light_b, 0, 0, 2000 - 80 * light_beet * light_beet);
   
+  float fadeout = moonlander.getIntValue("tunnel_out");
+  
   background(0);
   
   float diameter = 200;
@@ -228,7 +232,7 @@ void boxTunnelEffect() {
       
       box_d -= pulse * diameter / 3; // (diameter / map(ring_z, zStart, zEnd, 4, 1));
      
-      translate(0, box_d/2, 0);
+      translate(0, box_d/2 * (fadeout / 100 * (d+2) + 1), 0);
       
       box(PI * box_d / boxes_per_ring);
       //box(boxsize);
@@ -710,6 +714,63 @@ void wavesEffect() {
    popStyle();
 }
 
+void puu(float x, float y, float dist, float d) {
+  
+  float time = (float)moonlander.getCurrentTime();
+  
+  if (noise(x,y,d) < 0.10 * d) return;
+  
+  float p = -20 / d;
+ 
+  stroke(255.0 / 500.0 * (500.0 + dist));
+  line(0,0,0,0,p,0);
+  translate(0,p,0);
+  
+  for (int i = 0; i < 3; ++i) {
+    
+    float n = 0.5 - noise(x, y, time/5 + float(i) / 3 + d);
+    
+    rotateZ(2*PI / 6 * (-1 + i) + n);
+    
+    puu(x,y,dist, d+1);
+    
+    rotateZ(-2*PI / 6 * (-1 + i) - n);
+    
+  }
+  
+  translate(0,-p,0);
+}
+
+void treeEffect() {
+  pushStyle();
+  pushMatrix();
+  
+  rotateX(-10.0 / 360 * 2 * PI);
+  //translate(100, 1000, -3000;
+  float time = (float)moonlander.getCurrentTime();
+  translate(0,-100,500 + time*100);
+  
+  for (int i = -10; i < 10; ++i) {
+    for (int j = -10; j < 20; ++j) {
+      
+      float nx = noise(i, j);
+      float nz = noise(j, i);
+      
+      float dx = 50*(i + nx);
+      float dz = 50*(j + nz);
+      
+      translate(dx, 0, dz);
+      puu(i,j,dz,1);    
+      translate(-dx, 0, -dz);
+    }
+  }
+  
+  
+  
+  popMatrix();
+  popStyle();
+}
+
 void draw() {  
   moonlander.update();
   
@@ -717,7 +778,7 @@ void draw() {
   background(0);
  
   int effect = moonlander.getIntValue("effect");
- 
+
   if(effect == 0) flyingPointerEffect();
   if(effect == 1) dezgegEffect();
   if(effect == 2) cubeEffect();
