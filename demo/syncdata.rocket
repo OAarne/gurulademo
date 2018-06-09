@@ -35,8 +35,8 @@
 			<key row="511" value="0.6" interpolation="0"/>
 		</track>
 		<track name="creditsPos">
-			<key row="944" value="0" interpolation="1"/>
-			<key row="1023" value="5000" interpolation="0"/>
+			<key interpolation="1" row="1440" value="0"/>
+			<key interpolation="0" row="1504" value="5000"/>
 		</track>
 		<track name="flyingPointerCount">
 			<key row="0" value="1" interpolation="0"/>
@@ -120,6 +120,23 @@
 		<track name="tunnel_out">
 			<key row="1392" value="0" interpolation="2"/>
 			<key row="1440" value="70" interpolation="0"/>
+		</track>
+		<track name="fade">
+			<key value="1" interpolation="0" row="0"/>
+			<key value="0" interpolation="1" row="856"/>
+			<key value="1" interpolation="0" row="857"/>
+			<key value="1" interpolation="1" row="942"/>
+			<key value="0" interpolation="0" row="943"/>
+			<key value="0" interpolation="1" row="944"/>
+			<key value="1" interpolation="0" row="945"/>
+			<key value="1" interpolation="1" row="1118"/>
+			<key value="0" interpolation="0" row="1119"/>
+			<key value="0" interpolation="1" row="1120"/>
+			<key value="1" interpolation="0" row="1121"/>
+		</track>
+		<track name="titleTextAlpha">
+			<key row="888" interpolation="1" value="0"/>
+			<key row="896" interpolation="0" value="1"/>
 		</track>
 	</tracks>
 	<bookmarks/>

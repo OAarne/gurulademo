@@ -5,6 +5,8 @@ Moonlander moonlander;
 
 void settings() {
   size(640, 480, P3D);
+  //size(1920, 1080, P3D);
+  //fullScreen();
 }
 
 PImage hourglass;
@@ -16,6 +18,8 @@ void setup() {
   noiseSeed(1337);
   
   hourglass = loadImage("hourglass.png");
+  
+  noCursor();
 }
 
 PVector[] initMousePointerCoords() {
@@ -154,10 +158,9 @@ void creditsEffect() {
   float pos = (float)moonlander.getValue("creditsPos");
   translate(0, -pos);
   String text =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec felis volutpat, suscipit mi sit amet, faucibus est. Praesent egestas lobortis erat a facilisis. Fusce finibus, tellus at placerat congue, velit nisi varius orci, quis porta augue turpis at augue. Sed mollis odio magna, ut semper nisl mattis at. Curabitur faucibus condimentum elit maximus interdum. Quisque at aliquet nisl. Curabitur vel faucibus eros, non egestas risus.\n\n" +
-    "Suspendisse in molestie erat, eget elementum turpis. Nunc viverra vulputate mi, sed pulvinar justo iaculis a. Pellentesque viverra sapien risus, condimentum ornare elit condimentum eget. Proin venenatis turpis in lectus sollicitudin tristique. In ullamcorper id tortor sed blandit. Duis convallis bibendum nisi, ac mollis elit scelerisque ac. Fusce non pharetra arcu. Etiam sapien ante, vestibulum at magna id, ornare tincidunt lectus. Vivamus faucibus elementum est ut ultrices. Suspendisse at leo eu magna sollicitudin lobortis.\n\n" +
-    "Sed sit amet viverra nibh. Aliquam finibus accumsan vulputate. Mauris vitae volutpat sapien, ac ultricies leo. Curabitur sit amet turpis vehicula, faucibus enim et, suscipit turpis. Curabitur ut eleifend mauris, scelerisque tempor nisl. Suspendisse imperdiet, justo eu ullamcorper elementum, augue neque laoreet justo, nec porta mi sem eget erat. Vestibulum vel nisi ut orci faucibus ullamcorper sagittis nec urna. Phasellus malesuada eros id libero commodo, et volutpat mi malesuada. Donec sagittis at libero et gravida. Phasellus quis libero quam. Ut purus ligula, euismod quis justo in, scelerisque facilisis quam. Praesent fermentum sapien ut rhoncus consectetur. Fusce maximus accumsan venenatis. Integer a urna vitae dui suscipit rhoncus ut at metus.\n\n" +
-    "Mauris fermentum dui et ultrices fringilla. Vestibulum commodo lacinia lectus vel hendrerit. Curabitur hendrerit orci urna, vitae porta justo ultricies eu. Vestibulum iaculis vitae nunc id malesuada. Duis ligula mi, tincidunt a ligula quis, lacinia placerat dui. Morbi vestibulum lorem eget enim imperdiet, sed tempor nibh cursus. Cras elementum ipsum et lacus condimentum, quis finibus quam rutrum. Donec augue augue, egestas quis est in, facilisis tristique lacus. Praesent fringilla vulputate risus, ut rutrum arcu aliquam vitae. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse malesuada tincidunt mollis. Nunc lacinia leo leo, non maximus est faucibus sed. Donec consequat purus eu ante egestas, sit amet ultricies metus venenatis.\n\n" +
+    "Music: 'Rhinoceros' by Kevin MacLeod (CC BY 3.0).\n\n" +
+    "Greetings to: all fuksipallerot and n:th year students of Gurula.\n\n" +
+    "Fuckings to: Alepa Otaniemi for not having PowerKing!\n\n" +
     "Morbi aliquet ante vitae faucibus porta. In eleifend odio a purus efficitur, non molestie ipsum dictum. Mauris cursus justo at pellentesque suscipit. Phasellus sit amet orci at turpis luctus congue. Integer nec justo libero. Cras convallis odio a tortor eleifend finibus. Proin ac fermentum lorem, nec sollicitudin sem. Proin lacinia quis arcu vel vehicula. Aliquam erat volutpat.";
   
   fill(255);
@@ -197,14 +200,14 @@ void boxTunnelEffect() {
   
   background(0);
   
-  float diameter = 200;
+  float diameter = 270;
   float jaggyness = 100;
   float boxes_per_ring = 15;
   float boxsize = PI * diameter / boxes_per_ring;
   float depth = 100; 
   
-  float zStart = 1000;
-  float zEnd = zStart - boxsize * depth;
+  float zStart = 1200;
+  //float zEnd = zStart - boxsize * depth;
   
   //translate(0, 0, -time*100);
     
@@ -620,19 +623,25 @@ PImage findEdges(PImage img) {
                                      -1,-1,-1 }, 1);
 }
 
+color alphaBlend(color c1, color c2, float alpha) {
+  return color(
+    int(red(c1) * alpha + red(c2) * (1.0 - alpha)),
+    int(green(c1) * alpha + green(c2) * (1.0 - alpha)),
+    int(blue(c1) * alpha + blue(c2) * (1.0 - alpha))
+  );
+}
+
 void drawTiled(PImage img) {
-  img.loadPixels();
-  loadPixels();
-  for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        pixels[y * width + x] = img.pixels[(y % img.height) * img.width + (x % img.width)];
+  int yCount = height / img.height + 1;
+  int xCount = width / img.width + 1;
+  for (int y = 0; y < yCount; y++) {
+      for (int x = 0; x < xCount; x++) {
+        image(img, x * img.width, y * img.width, img.width, img.height);
       }
   }
-  updatePixels();
 }
 
 PImage blurredText;
-PImage enhancedText;
 
 void titleText() {
   if (blurredText == null) {
@@ -642,22 +651,24 @@ void titleText() {
     graphics.fill(255);
     graphics.textAlign(CENTER, TOP);
 
-    int ts = 10;
     String str1 = "Graffathon";
     String str2 = "Graffathon 2018";
-    for (int i = 0; i < 1000; i++, ts++) {
+
+    int ts = 369;
+    for (int i = 0; i < 10; i++, ts--) {
       graphics.textSize(ts);
-      if (graphics.textWidth(str1) >= graphics.width)
+      if (graphics.textWidth(str1) < graphics.width)
         break;
     }
-    graphics.textSize(ts - 1);
+    graphics.textSize(ts);
 
     graphics.text(str2, 0, 0, graphics.width, graphics.height);
     graphics.endDraw();
 
-    blurredText = blur(blur(blur(graphics)));
-    enhancedText = findEdges(softenLess(graphics));
+    blurredText = blur(blur(graphics));
   }
+
+  float textAlpha = (float)moonlander.getValue("titleTextAlpha");
 
   loadPixels();
   for (int y = 0; y < height; y++) {
@@ -665,13 +676,16 @@ void titleText() {
         color blurredPx = blurredText.pixels[blurredText.width * y + x];
         if (red(blurredPx) == 0 && green(blurredPx) == 0 && blue(blurredPx) == 0)
           continue;
-        pixels[blurredText.width * y + x] = blurredPx;
+        pixels[blurredText.width * y + x] = alphaBlend(blurredPx, pixels[blurredText.width * y + x], textAlpha);
       }
   }
   updatePixels();
 }
 
 void dezgegEffect() {
+  resetMatrix();
+  ortho();
+  translate(-width / 2, -height / 2);
   int wh = Math.min(width, height) / 4;
   PImage img = colorWheel(wh, wh);
 
@@ -683,7 +697,18 @@ void dezgegEffect() {
   img = waterWith(img, img, waterLR, waterUD);
 
   drawTiled(img);
-  titleText();
+  //titleText();
+}
+
+void doFade(float amount) {
+  //loadPixels();
+  //for (int y = 0; y < height; y++) {
+  //    for (int x = 0; x < width; x++) {
+  //      color c = pixels[y * width + x];
+  //      pixels[y * width + x] = color(amount * red(c), amount * green(c), amount * blue(c));
+  //    }
+  //}
+  //updatePixels();
 }
 
 void wavesEffect() {
@@ -823,4 +848,7 @@ void draw() {
   if(effect == 3) wavesEffect();
   if(effect == 4) boxTunnelEffect();
   if(effect == 5) treeEffect();
+  float fade = (float)moonlander.getValue("fade");
+  if (fade < 1.0)
+    doFade(fade);
 }
