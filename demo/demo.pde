@@ -6,7 +6,7 @@ Moonlander moonlander;
 void settings() {
   size(640, 480, P3D);
   //size(1920, 1080, P3D);
-  //fullScreen();
+  //fullScreen(P3D);
 }
 
 PImage hourglass;
@@ -834,6 +834,29 @@ void treeEffect() {
   popStyle();
 }
 
+void namedropEffect() {
+  pushStyle();
+  pushMatrix();
+  
+  fill(255);
+  textSize(100);
+  text("dangling pointer.", -600, -200, 0);
+  
+  float factor = (float)moonlander.getValue("dangle_factor");
+  
+  translate(215, -150, 0);
+  
+  
+  rotateZ(sin(2*PI* factor * 3));
+  translate(0, 200, 0);
+  
+  rotateZ(sin(2*PI / 12));
+  mousePointer3D(70, 1);
+  
+  popMatrix();
+  popStyle();
+}
+
 void draw() {  
   moonlander.update();
   
@@ -845,6 +868,7 @@ void draw() {
 
   if(effect == 0) flyingPointerEffect();
   if(effect == 1) dezgegEffect();
+  if(effect == 9) namedropEffect();
   if(effect == 2) cubeEffect();
   if(effect == 3) wavesEffect();
   if(effect == 4) boxTunnelEffect();
