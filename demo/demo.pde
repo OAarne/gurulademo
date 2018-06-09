@@ -162,6 +162,56 @@ void creditsEffect() {
   popStyle();
 }
 
+void cubeEffect() {
+  pushStyle();
+  pushMatrix();
+  
+  pointLight(255, 255, 255, -1000, -1000, 1000);
+  ambientLight(128, 128, 128);
+  
+  float t = (float)moonlander.getCurrentTime();
+  rotateX(t);
+  rotateY(1.3 * t);
+  
+  PGraphics graphics = createGraphics(1000, 1000);
+  graphics.beginDraw();
+  graphics.rectMode(RADIUS);
+  graphics.background(100);
+  graphics.fill(255, 0, 0);
+  graphics.textSize(100);
+  graphics.text("ÄÄH", 500, 500);
+  graphics.endDraw();
+  
+  imageMode(CENTER);
+  
+  for(int i = -1; i <= 1; i += 2) {
+    pushMatrix();
+    translate(0, 0, 275 * i);
+    scale(i, 1);
+    image(graphics, 0, 0, 550, 550);
+    popMatrix();
+  }
+  for(int i = -1; i <= 1; i += 2) {
+    pushMatrix();
+    rotateX(0.5 * (float)Math.PI);
+    translate(0, 0, 275 * i);
+    scale(i, 1);
+    image(graphics, 0, 0, 550, 550);
+    popMatrix();
+  }
+  for(int i = -1; i <= 1; i += 2) {
+    pushMatrix();
+    rotateY(0.5 * (float)Math.PI);
+    translate(0, 0, 275 * i);
+    scale(i, 1);
+    image(graphics, 0, 0, 550, 550);
+    popMatrix();
+  }
+  
+  popMatrix();
+  popStyle();
+}
+
 void draw() {  
   moonlander.update();
   
@@ -171,4 +221,5 @@ void draw() {
   int effect = moonlander.getIntValue("effect");
   if(effect == 0) flyingPointerEffect();
   if(effect == 1) creditsEffect();
+  if(effect == 2) cubeEffect();
 }
