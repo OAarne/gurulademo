@@ -690,6 +690,17 @@ void dezgegEffect() {
   titleText();
 }
 
+void doFade(float amount) {
+  loadPixels();
+  for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        color c = pixels[y * width + x];
+        pixels[y * width + x] = color(amount * red(c), amount * green(c), amount * blue(c));
+      }
+  }
+  updatePixels();
+}
+
 void wavesEffect() {
   pushStyle();
   pushMatrix();
@@ -809,4 +820,8 @@ void draw() {
   if(effect == 3) wavesEffect();
   if(effect == 4) boxTunnelEffect();
   if(effect == 5) creditsEffect();
+
+  float fade = (float)moonlander.getValue("fade");
+  if (fade < 1.0)
+    doFade(fade);
 }

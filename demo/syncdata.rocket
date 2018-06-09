@@ -121,6 +121,19 @@
 			<key row="1392" value="0" interpolation="2"/>
 			<key row="1440" value="70" interpolation="0"/>
 		</track>
+		<track name="fade">
+			<key value="1" interpolation="0" row="0"/>
+			<key value="0" interpolation="1" row="856"/>
+			<key value="1" interpolation="0" row="857"/>
+			<key value="1" interpolation="1" row="942"/>
+			<key value="0" interpolation="0" row="943"/>
+			<key value="0" interpolation="1" row="944"/>
+			<key value="1" interpolation="0" row="945"/>
+			<key value="1" interpolation="1" row="1118"/>
+			<key value="0" interpolation="0" row="1119"/>
+			<key value="0" interpolation="1" row="1120"/>
+			<key value="1" interpolation="0" row="1121"/>
+		</track>
 	</tracks>
 	<bookmarks/>
 </sync>
