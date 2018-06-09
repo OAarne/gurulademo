@@ -35,8 +35,8 @@
 			<key row="511" value="0.6" interpolation="0"/>
 		</track>
 		<track name="creditsPos">
-			<key row="944" value="0" interpolation="1"/>
-			<key row="1023" value="5000" interpolation="0"/>
+			<key interpolation="1" row="1440" value="0"/>
+			<key interpolation="0" row="1504" value="5000"/>
 		</track>
 		<track name="flyingPointerCount">
 			<key row="0" value="1" interpolation="0"/>
