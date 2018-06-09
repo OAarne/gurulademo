@@ -636,7 +636,7 @@ void drawTiled(PImage img) {
   int xCount = width / img.width + 1;
   for (int y = 0; y < yCount; y++) {
       for (int x = 0; x < xCount; x++) {
-        image(img, x * img.width, y * img.width, img.width, img.height);
+        image(img, x * img.width, y * img.height, img.width, img.height);
       }
   }
 }
