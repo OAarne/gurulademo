@@ -1,5 +1,9 @@
 <sync rows="1024">
 	<tracks>
+		<track name="effect">
+			<key value="0" interpolation="0" row="0"/>
+			<key value="1" interpolation="0" row="840"/>
+		</track>
 		<track name="flyingPointerDepth">
 			<key value="0" interpolation="0" row="0"/>
 			<key value="50" interpolation="0" row="126"/>

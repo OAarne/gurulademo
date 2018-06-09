@@ -141,11 +141,18 @@ void flyingPointerEffect() {
   }
 }
 
+void creditsEffect() {
+  // TODO: koodaa creditsit
+  rect(0, 0, 100, 100);
+}
+
 void draw() {  
   moonlander.update();
   
   camera(0, 0, 1000, 0, 0, 0, 0, 1, 0);
   background(0);
   
-  flyingPointerEffect();
+  int effect = moonlander.getIntValue("effect");
+  if(effect == 0) flyingPointerEffect();
+  if(effect == 1) creditsEffect();
 }
