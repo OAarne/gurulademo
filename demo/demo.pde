@@ -170,7 +170,7 @@ void cubeEffect() {
   pushStyle();
   pushMatrix();
   
-  pointLight(255, 255, 255, -1000, -1000, 1000);
+  directionalLight(255, 255, 255, 1, 1, -1);
   ambientLight(128, 128, 128);
   
   float t = (float)moonlander.getCurrentTime();
@@ -193,26 +193,14 @@ void cubeEffect() {
   
   imageMode(CENTER);
   
-  for(int i = -1; i <= 1; i += 2) {
+  for(int i = 0; i < 6; ++i) {
     pushMatrix();
-    translate(0, 0, 275 * i);
-    scale(i, 1);
-    image(graphics, 0, 0, 550, 550);
-    popMatrix();
-  }
-  for(int i = -1; i <= 1; i += 2) {
-    pushMatrix();
-    rotateX(0.5 * (float)Math.PI);
-    translate(0, 0, 275 * i);
-    scale(i, 1);
-    image(graphics, 0, 0, 550, 550);
-    popMatrix();
-  }
-  for(int i = -1; i <= 1; i += 2) {
-    pushMatrix();
-    rotateY(0.5 * (float)Math.PI);
-    translate(0, 0, 275 * i);
-    scale(i, 1);
+    if(i == 1) rotateX((float)Math.PI);
+    if(i == 2) rotateX(0.5 * (float)Math.PI);
+    if(i == 3) rotateX(-0.5 * (float)Math.PI);
+    if(i == 4) rotateY(0.5 * (float)Math.PI);
+    if(i == 5) rotateY(-0.5 * (float)Math.PI);
+    translate(0, 0, 275);
     image(graphics, 0, 0, 550, 550);
     popMatrix();
   }
