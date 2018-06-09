@@ -3,6 +3,10 @@ import ddf.minim.*;
 
 Moonlander moonlander;
 
+color fuchsia = color(253,66,247);
+color teal = color(55,252,252);
+color paleBlue = color(160,191,239);
+
 void settings() {
   size(640, 480, P3D);
   //size(1920, 1080, P3D);
@@ -51,9 +55,9 @@ void mousePointers(float size, int count, float r) {
     if(i % 3 == 0) {
       fill(255, 255, 255);
     } else if(i % 3 == 1) { 
-      fill(0, 255, 255);
+      fill(teal);
     } else {
-      fill(255, 0, 0);
+      fill(fuchsia);
     }
     translate(0, 0, 2 * r * ((float)i / Math.max(1.0, (float)count - 1.0) - 0.5));
     scale(size);
@@ -93,9 +97,9 @@ void mousePointer3D(float size, float r) {
   int idx = 0;
   for(PVector cur : mousePointerCoords) {
     if(idx % 2 == 0) {
-      fill(0, 255, 255);
+      fill(teal);
     } else {
-      fill(255, 0, 0);
+      fill(fuchsia);
     }
     beginShape();
     float u = r / Math.max(size, 1.0);
@@ -191,10 +195,10 @@ void boxTunnelEffect() {
   
   float light_beet = beat % 6;
   
-  pointLight(255 * light_r, 255 * light_g, 255 * light_b, 0, 0, 2000 - 80 * light_beet * light_beet);
+  pointLight(red(teal), green(teal), blue(teal), 0, 0, 2000 - 80 * light_beet * light_beet);
   
   light_beet = (beat + 3) % 6;
-  pointLight(255 * light_r, 255 * light_g, 255 * light_b, 0, 0, 2000 - 80 * light_beet * light_beet);
+  pointLight(red(teal), green(teal), blue(teal), 0, 0, 2000 - 80 * light_beet * light_beet);
   
   float fadeout = (float) moonlander.getValue("tunnel_out") * 60;
   
@@ -288,7 +292,7 @@ void cubeEffect() {
   pushMatrix();
   
   directionalLight(255, 255, 255, 1, 1, -1);
-  ambientLight(128, 128, 128);
+  ambientLight(200, 200, 200);
   
   int content = moonlander.getIntValue("cubeContent");
   float arrowSize = (float)moonlander.getValue("cubeArrowSize");
@@ -452,7 +456,7 @@ void cubeEffect() {
               }
             }
               
-            g.pixels[x + y * g.width] = hsvToRgb(0.1, 1.0, val);
+            g.pixels[x + y * g.width] = hsvToRgb(hue(fuchsia)/255, saturation(fuchsia)/255, val);
           }
         }
         g.updatePixels();
@@ -747,7 +751,7 @@ void wavesEffect() {
  
   translate(0, 0, zoom);
  
-  pointLight(255 * light_r, 255 * light_g, 255 * light_b, 0.0, 0.0, 200.0);
+  pointLight(red(teal), green(teal), blue(teal), 0.0, 0.0, 200.0);
   
   float time = (float)moonlander.getCurrentTime();
   float beat = (float)moonlander.getCurrentRow();
@@ -852,7 +856,9 @@ void treeEffect() {
       float dz = 50*(j + nz);
       
       translate(dx, 0, dz);
-      stroke(map(j, j1, j2, 0, 255) * fadeout);
+      if (j % 2 == 0) stroke(hsvToRgb(hue(fuchsia)/255, saturation(fuchsia)/255, map(j, j1, j2, 0, 1) * fadeout));
+      if (j % 2 != 0) stroke(hsvToRgb(hue(teal)/255, saturation(teal)/255, map(j, j1, j2, 0, 1) * fadeout));
+      if (j % 3 == 0) stroke(hsvToRgb(hue(paleBlue)/255, saturation(paleBlue)/255, map(j, j1, j2, 0, 1) * fadeout));
       strokeWeight(height / 480);
       puu(i,j,dz,1);    
       translate(-dx, 0, -dz);
