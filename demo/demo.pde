@@ -35,6 +35,7 @@ PVector[] initMousePointerCoords() {
 }
 PVector[] mousePointerCoords = initMousePointerCoords();
 
+// Pakka pointtereita origoon, count kpl, paksuus 2r
 void mousePointers(float size, int count, float r) {
   pushStyle();
   noStroke();
@@ -59,11 +60,12 @@ void mousePointers(float size, int count, float r) {
   popStyle();
 }
 
+// 3D-pointteri origoon, paksuus 2r
 void mousePointer3D(float size, float r) {
   pushStyle();
   noStroke();
   
-  // Bottom & top
+  // Pohjat
   fill(255, 255, 255);
   for(int i = -1; i <= 1; i += 2) {
     pushMatrix();
