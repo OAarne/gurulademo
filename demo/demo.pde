@@ -683,8 +683,6 @@ void titleText() {
 }
 
 void dezgegEffect() {
-  resetMatrix();
-  ortho();
   translate(-width / 2, -height / 2);
   int wh = Math.min(width, height) / 4;
   PImage img = colorWheel(wh, wh);
