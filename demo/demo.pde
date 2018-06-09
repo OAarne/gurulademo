@@ -632,14 +632,13 @@ color alphaBlend(color c1, color c2, float alpha) {
 }
 
 void drawTiled(PImage img) {
-  img.loadPixels();
-  loadPixels();
-  for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        pixels[y * width + x] = img.pixels[(y % img.height) * img.width + (x % img.width)];
+  int yCount = height / img.height + 1;
+  int xCount = width / img.width + 1;
+  for (int y = 0; y < yCount; y++) {
+      for (int x = 0; x < xCount; x++) {
+        image(img, x * img.width, y * img.width, img.width, img.height);
       }
   }
-  updatePixels();
 }
 
 PImage blurredText;
@@ -684,6 +683,9 @@ void titleText() {
 }
 
 void dezgegEffect() {
+  resetMatrix();
+  ortho();
+  translate(-width / 2, -height / 2);
   int wh = Math.min(width, height) / 4;
   PImage img = colorWheel(wh, wh);
 
@@ -695,7 +697,7 @@ void dezgegEffect() {
   img = waterWith(img, img, waterLR, waterUD);
 
   drawTiled(img);
-  titleText();
+  //titleText();
 }
 
 void doFade(float amount) {
