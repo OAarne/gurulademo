@@ -735,6 +735,7 @@ void wavesEffect() {
 }
 
 void puu(float x, float y, float dist, float d) {
+  if(d > 4) return;
   
   float time = (float)moonlander.getCurrentTime();
   
@@ -742,13 +743,13 @@ void puu(float x, float y, float dist, float d) {
   
   float p = -20 / d;
  
-  stroke(255.0 / 500.0 * (500.0 + dist));
   line(0,0,0,0,p,0);
   translate(0,p,0);
   
   for (int i = 0; i < 3; ++i) {
     
     float n = 0.5 - noise(x, y, time/5 + float(i) / 3 + d);
+    n *= 2;
     
     rotateZ(2*PI / 6 * (-1 + i) + n);
     
@@ -766,26 +767,43 @@ void treeEffect() {
   pushMatrix();
   
   rotateX(-10.0 / 360 * 2 * PI);
-  //translate(100, 1000, -3000;
+  
+  float curParam = (float)moonlander.getValue("treeCursorParam");
+  curParam = curParam * curParam;
+  
+  pushMatrix();
+  translate(0, -100, 950 - 2500 * curParam);
+  rotateX((1 - curParam) * 0.5 * (float)Math.PI);
+  rotateZ((1 - curParam * curParam) * 0.35);
+  mousePointer3D(50, 5);
+  popMatrix();
+  
   float time = (float)moonlander.getCurrentTime();
   translate(0,-100,500 + time*100);
   
-  for (int i = -10; i < 10; ++i) {
-    for (int j = -10; j < 20; ++j) {
+  float jd = 2 * time;
+  float j1 = -10 - jd;
+  float j2 = 9 - jd;
+  
+  for (int i = -7; i <= 7; ++i) {
+    for (int j = (int)j1; j < (int)j2; ++j) {
+      if(i >= -1 && i <= 1) {
+        continue;
+      }
       
-      float nx = noise(i, j);
+      float nx = noise(i, j) - 0.5;
       float nz = noise(j, i);
       
       float dx = 50*(i + nx);
       float dz = 50*(j + nz);
       
       translate(dx, 0, dz);
+      stroke(map(j, j1, j2, 0, 255) * Math.min(map(curParam, 0.95, 1, 1, 0), 1));
+      strokeWeight(height / 480);
       puu(i,j,dz,1);    
       translate(-dx, 0, -dz);
     }
   }
-  
-  
   
   popMatrix();
   popStyle();
@@ -804,5 +822,5 @@ void draw() {
   if(effect == 2) cubeEffect();
   if(effect == 3) wavesEffect();
   if(effect == 4) boxTunnelEffect();
-  if(effect == 5) creditsEffect();
+  if(effect == 5) treeEffect();
 }
