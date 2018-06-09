@@ -3,6 +3,7 @@
 		<track name="effect">
 			<key value="0" interpolation="0" row="0"/>
 			<key value="1" interpolation="0" row="856"/>
+			<key value="2" interpolation="0" row="944"/>
 		</track>
 		<track name="flyingPointerDepth">
 			<key value="0" interpolation="0" row="0"/>
@@ -31,7 +32,7 @@
 			<key value="0.6" interpolation="0" row="511"/>
 		</track>
 		<track name="creditsPos">
-			<key value="0" interpolation="1" row="856"/>
+			<key value="0" interpolation="1" row="944"/>
 			<key value="5000" interpolation="0" row="1023"/>
 		</track>
 		<track name="flyingPointerCount">
@@ -77,6 +78,27 @@
 			<key value="1" interpolation="0" row="768"/>
 			<key value="1" interpolation="1" row="832"/>
 			<key value="20" interpolation="0" row="840"/>
+		</track>
+		<track name="colorEffectSineWaveWidth">
+			<key value="0.1" interpolation="1" row="856"/>
+			<key value="0.6" interpolation="1" row="885"/>
+			<key value="0.6" interpolation="1" row="902"/>
+			<key value="-0.33" interpolation="0" row="943"/>
+		</track>
+		<track name="colorEffectSineWaveHeight">
+			<key value="0" interpolation="1" row="856"/>
+			<key value="0.3" interpolation="1" row="885"/>
+			<key value="0.6" interpolation="1" row="902"/>
+			<key value="0.6" interpolation="1" row="928"/>
+			<key value="-0.33" interpolation="0" row="943"/>
+		</track>
+		<track name="colorEffectWaterLR">
+			<key value="0" interpolation="1" row="856"/>
+			<key value="0.5" interpolation="0" row="943"/>
+		</track>
+		<track name="colorEffectWaterUD">
+			<key value="0.3" interpolation="1" row="856"/>
+			<key value="0.4" interpolation="0" row="943"/>
 		</track>
 	</tracks>
 	<bookmarks/>
