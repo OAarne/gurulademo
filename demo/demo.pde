@@ -173,6 +173,8 @@ void cubeEffect() {
   directionalLight(255, 255, 255, 1, 1, -1);
   ambientLight(128, 128, 128);
   
+  int content = moonlander.getIntValue("cubeContent");
+  
   float t = (float)moonlander.getCurrentTime();
   rotateX(t);
   rotateY(1.3 * t);
@@ -181,27 +183,87 @@ void cubeEffect() {
   float measInt = (float)Math.floor(meas);
   float measFrac = meas - measInt;
   
-  PGraphics graphics = createGraphics(1000, 1000);
-  graphics.beginDraw();
-  graphics.rectMode(RADIUS);
-  graphics.background(100);
-  graphics.imageMode(CENTER);
-  graphics.translate(500, 500);
-  graphics.rotate(0.5 * (float)Math.PI * (measInt + measFrac * measFrac * (3 - 2 * measFrac)));
-  graphics.image(hourglass, 0, 0, 300, 300);
-  graphics.endDraw();
+  PGraphics graphics[] = new PGraphics[6];
+  for(int i = 0; i < 6; ++i) {
+    graphics[i] = createGraphics(100, 100);
+  }
+  
+  if(content == 0) {
+    for(int i = 0; i < 6; ++i) {
+      PGraphics g = graphics[i];
+      g.beginDraw();
+      g.background(100);
+      g.imageMode(CENTER);
+      g.translate(0.5 * g.width, 0.5 * g.height);
+      g.rotate(0.5 * (float)Math.PI * (measInt + measFrac * measFrac * (3 - 2 * measFrac)));
+      g.image(hourglass, 0, 0, 0.4 * g.width, 0.4 * g.width);
+      g.endDraw();
+    }
+  }
+  
+  if(content == 1) {
+    for(int i = 0; i < 6; ++i) {
+      PGraphics g = graphics[i];
+      g.beginDraw();
+      g.loadPixels();
+      for(int x = 0; x < g.width; ++x) {
+        for(int y = 0; y < g.height; ++y) {
+          g.pixels[x + y * g.width] = #000000;
+          
+          float A = (float)x / (float)g.width;
+          float B = (float)y / (float)g.width;
+          
+          float u, v, w;
+          u = A;
+          v = B;
+          w = 0;
+          if(i == 1) {
+            u = A;
+            v = 0;
+            w = 1 - B;
+          }
+          if(i == 2) {
+            u = A;
+            v = 1 - B;
+            w = 1;
+          }
+          if(i == 3) {
+            u = A;
+            v = 1;
+            w = B;
+          }
+          if(i == 4) {
+            u = 1;
+            v = B;
+            w = A;
+          }
+          if(i == 5) {
+            u = 0;
+            v = B;
+            w = 1 - A;
+          }
+          
+          float h = 0.4 * cos(1.3 * u + 1.5 * v - 0.3 * w + 1.2 * t) - 0.7 * sin(1.5 * u + 1.1 * v + 0.3 * w - 1.5 * t) + 0.3 * cos(-0.7 * u + v + w + 3 * t) + 0.7 * t;
+          
+          g.pixels[x + y * g.width] = hsvToRgb(h - Math.floor(h), 1, 0.5);
+        }
+      }
+      g.updatePixels();
+      g.endDraw();
+    }
+  }
   
   imageMode(CENTER);
   
   for(int i = 0; i < 6; ++i) {
     pushMatrix();
-    if(i == 1) rotateX((float)Math.PI);
-    if(i == 2) rotateX(0.5 * (float)Math.PI);
+    if(i == 1) rotateX(0.5 * (float)Math.PI);
+    if(i == 2) rotateX((float)Math.PI);
     if(i == 3) rotateX(-0.5 * (float)Math.PI);
     if(i == 4) rotateY(0.5 * (float)Math.PI);
     if(i == 5) rotateY(-0.5 * (float)Math.PI);
     translate(0, 0, 275);
-    image(graphics, 0, 0, 550, 550);
+    image(graphics[i], 0, 0, 550, 550);
     popMatrix();
   }
   
