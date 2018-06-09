@@ -275,10 +275,23 @@ void cubeEffect() {
   ambientLight(128, 128, 128);
   
   int content = moonlander.getIntValue("cubeContent");
+  float arrowSize = (float)moonlander.getValue("cubeArrowSize");
   
   float t = (float)moonlander.getCurrentTime();
   rotateX(t);
   rotateY(1.3 * t);
+  
+  boolean[] visible = new boolean[6];
+  for(int i = 0; i < 6; ++i) {
+    pushMatrix();
+    if(i == 1) rotateX(0.5 * (float)Math.PI);
+    if(i == 2) rotateX((float)Math.PI);
+    if(i == 3) rotateX(-0.5 * (float)Math.PI);
+    if(i == 4) rotateY(0.5 * (float)Math.PI);
+    if(i == 5) rotateY(-0.5 * (float)Math.PI);
+    if(screenZ(0, 0, 0) > screenZ(0, 0, 1)) visible[i] = true;
+    popMatrix();
+  }
   
   float meas = (float)moonlander.getCurrentRow() / 8;
   float measInt = (float)Math.floor(meas);
@@ -303,36 +316,38 @@ void cubeEffect() {
   }
   
   if(content == 1) {
-    PVector[][] polygons = new PVector[3][];
+    PVector[][] polygons = new PVector[5][];
     int[][][] triangulation = {
       {{0, 1}, {5, 6}, {6, 0}},
       {{0, 1}, {1, 2}, {6, 0}},
       {{0, 1}, {6, 0}, {2, 3}, {3, 4}, {4, 5}}
     };
-    for(int polyi = 0; polyi < polygons.length; ++polyi) {
-      PVector axis = new PVector(noise(polyi, 0.1) - 0.5, noise(polyi, 0.2) - 0.5, noise(polyi, 0.3) - 0.5);
-      axis.normalize();
-      
-      PVector rot1 = axis.cross(new PVector(1, 0, 0));
-      rot1.normalize();
-      PVector rot2 = axis.cross(rot1);
-      rot2.normalize();
-      
-      float myt = 5 * t * noise(polyi, 0.5);
-      
-      PVector base = PVector.add(PVector.mult(rot1, cos(myt)), PVector.mult(rot2, sin(myt)));
-      base = PVector.add(base, PVector.mult(axis, noise(polyi, 0.4)));
-      base.normalize();
-      
-      PVector[] poly = new PVector[mousePointerCoords.length];
-      polygons[polyi] = poly;
-      PVector e1 = base.cross(new PVector(1, 0, 0));
-      e1.normalize();
-      PVector e2 = base.cross(e1);
-      e2.normalize();
-      for(int i = 0; i < poly.length; ++i) {
-        poly[i] = PVector.add(base, PVector.add(PVector.mult(e1, mousePointerCoords[i].x), PVector.mult(e2, mousePointerCoords[i].y)));
-        poly[i].normalize();
+    if(arrowSize > 0) {
+      for(int polyi = 0; polyi < polygons.length; ++polyi) {
+        PVector axis = new PVector(noise(polyi, 0.1, 0.5) - 0.5, noise(polyi, 0.2, 0.5) - 0.5, noise(polyi, 0.3, 0.5) - 0.5);
+        axis.normalize();
+        
+        PVector rot1 = axis.cross(new PVector(1, 0, 0));
+        rot1.normalize();
+        PVector rot2 = axis.cross(rot1);
+        rot2.normalize();
+        
+        float myt = 5 * t * noise(polyi, 0.5);
+        
+        PVector base = PVector.add(PVector.mult(rot1, cos(myt)), PVector.mult(rot2, sin(myt)));
+        base = PVector.add(base, PVector.mult(axis, noise(polyi, 0.4)));
+        base.normalize();
+        
+        PVector[] poly = new PVector[mousePointerCoords.length];
+        polygons[polyi] = poly;
+        PVector e1 = base.cross(new PVector(1, 0, 0));
+        e1.setMag(arrowSize);
+        PVector e2 = base.cross(e1);
+        e2.setMag(arrowSize);
+        for(int i = 0; i < poly.length; ++i) {
+          poly[i] = PVector.add(base, PVector.add(PVector.mult(e1, mousePointerCoords[i].x), PVector.mult(e2, mousePointerCoords[i].y)));
+          poly[i].normalize();
+        }
       }
     }
     
@@ -340,87 +355,92 @@ void cubeEffect() {
     for(int i = 0; i < 6; ++i) {
       PGraphics g = graphics[i];
       g.beginDraw();
-      g.loadPixels();
-      for(int x = 0; x < g.width; ++x) {
-        for(int y = 0; y < g.height; ++y) {
-          g.pixels[x + y * g.width] = #000000;
-          
-          float A = (float)x / (float)g.width;
-          float B = (float)y / (float)g.width;
-          
-          float u, v, w;
-          u = A;
-          v = B;
-          w = 0;
-          if(i == 1) {
+      if(visible[i]) {
+        g.loadPixels();
+        for(int x = 0; x < g.width; ++x) {
+          for(int y = 0; y < g.height; ++y) {
+            g.pixels[x + y * g.width] = #000000;
+            
+            float A = (float)x / (float)g.width;
+            float B = (float)y / (float)g.width;
+            
+            float u, v, w;
             u = A;
-            v = 0;
-            w = 1 - B;
-          }
-          if(i == 2) {
-            u = A;
-            v = 1 - B;
-            w = 1;
-          }
-          if(i == 3) {
-            u = A;
-            v = 1;
-            w = B;
-          }
-          if(i == 4) {
-            u = 1;
             v = B;
-            w = A;
-          }
-          if(i == 5) {
-            u = 0;
-            v = B;
-            w = 1 - A;
-          }
-          
-          PVector spherePos = new PVector(u - 0.5, v - 0.5, w - 0.5);
-          spherePos.normalize();
-          
-          float h = 0.4 * cos(1.3 * u + 1.5 * v - 0.3 * w + 1.2 * t) - 0.7 * sin(1.5 * u + 1.1 * v + 0.3 * w - 1.5 * t) + 0.3 * cos(-0.7 * u + v + w + 3 * t) + 0.7 * t;
-          
-          h *= 10;
-          float val = h - floor(h);
-          val = cubicPulse(0.5, 0.2, val);
-          
-          PVector origin = new PVector(0, 0, 0);
-          
-          float dist = -1;
-          for(int polyi = 0; polyi < polygons.length; ++polyi) {
-            for(int trg = 0; trg < triangulation.length; ++trg) {
-              float mydist = 1;
-              for(int pair = 0; pair < triangulation[trg].length; ++pair) {
-                int i0 = triangulation[trg][pair][0];
-                int i1 = triangulation[trg][pair][1];
-                PVector p0 = polygons[polyi][i0];
-                PVector p1 = polygons[polyi][i1];
-                
-                mydist = Math.min(mydist, planeDist(origin, p0, p1, spherePos));
-              }
-              dist = Math.max(dist, mydist);
+            w = 0;
+            if(i == 1) {
+              u = A;
+              v = 0;
+              w = 1 - B;
             }
-          }
-          
-          if(dist > -0.1) {
-            if(dist < 0) {
-              if(dist > -0.05) {
-                val = 1 - Math.abs(dist + 0.05) / 0.05;
-              } else {
-                val = Math.max(val, 1 - Math.abs(dist + 0.05) / 0.05);
-              }
-            } else {
-              val = 0;
+            if(i == 2) {
+              u = A;
+              v = 1 - B;
+              w = 1;
             }
+            if(i == 3) {
+              u = A;
+              v = 1;
+              w = B;
+            }
+            if(i == 4) {
+              u = 1;
+              v = B;
+              w = A;
+            }
+            if(i == 5) {
+              u = 0;
+              v = B;
+              w = 1 - A;
+            }
+            
+            PVector spherePos = new PVector(u - 0.5, v - 0.5, w - 0.5);
+            spherePos.normalize();
+            
+            float h = 0.4 * cos(1.3 * u + 1.5 * v - 0.3 * w + 1.2 * t) - 0.7 * sin(1.5 * u + 1.1 * v + 0.3 * w - 1.5 * t) + 0.3 * cos(-0.7 * u + v + w + 3 * t) + 0.7 * t;
+            
+            h *= 10;
+            float val = h - floor(h);
+            val = cubicPulse(0.5, 0.2, val);
+            
+            PVector origin = new PVector(0, 0, 0);
+            
+            if(arrowSize > 0) {
+              float dist = -1;
+              for(int polyi = 0; polyi < polygons.length; ++polyi) {
+                if(polygons[polyi][0].dot(spherePos) < 0) continue;
+                for(int trg = 0; trg < triangulation.length; ++trg) {
+                  float mydist = 1;
+                  for(int pair = 0; pair < triangulation[trg].length; ++pair) {
+                    int i0 = triangulation[trg][pair][0];
+                    int i1 = triangulation[trg][pair][1];
+                    PVector p0 = polygons[polyi][i0];
+                    PVector p1 = polygons[polyi][i1];
+                    
+                    mydist = Math.min(mydist, planeDist(origin, p0, p1, spherePos));
+                  }
+                  dist = Math.max(dist, mydist);
+                }
+              }
+              
+              if(dist > -0.1) {
+                if(dist < 0) {
+                  if(dist > -0.05) {
+                    val = 1 - Math.abs(dist + 0.05) / 0.05;
+                  } else {
+                    val = Math.max(val, 1 - Math.abs(dist + 0.05) / 0.05);
+                  }
+                } else {
+                  val = 0;
+                }
+              }
+            }
+              
+            g.pixels[x + y * g.width] = hsvToRgb(0.1, 1.0, val);
           }
-          
-          g.pixels[x + y * g.width] = hsvToRgb(0.1, 1.0, val);
         }
+        g.updatePixels();
       }
-      g.updatePixels();
       g.endDraw();
     }
   }
