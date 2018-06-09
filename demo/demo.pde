@@ -683,6 +683,8 @@ void titleText() {
 }
 
 void dezgegEffect() {
+  resetMatrix();
+  ortho();
   translate(-width / 2, -height / 2);
   int wh = Math.min(width, height) / 4;
   PImage img = colorWheel(wh, wh);
@@ -835,6 +837,7 @@ void treeEffect() {
 void draw() {  
   moonlander.update();
   
+  perspective();
   camera(0, 0, 1000, 0, 0, 0, 0, 1, 0);
   background(0);
  
