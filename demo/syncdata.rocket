@@ -6,6 +6,7 @@
 			<key row="944" value="2" interpolation="0"/>
 			<key row="1120" value="3" interpolation="0"/>
 			<key row="1232" value="4" interpolation="0"/>
+			<key row="1440" value="5" interpolation="0"/>
 		</track>
 		<track name="flyingPointerDepth">
 			<key row="0" value="0" interpolation="0"/>
@@ -103,8 +104,13 @@
 			<key row="943" value="0.4" interpolation="0"/>
 		</track>
 		<track name="cubeContent">
-			<key value="0" row="944" interpolation="0"/>
-			<key value="1" row="1008" interpolation="0"/>
+			<key row="944" value="0" interpolation="0"/>
+			<key row="1008" value="1" interpolation="0"/>
+		</track>
+		<track name="waves_zoom">
+			<key row="1120" value="1" interpolation="0"/>
+			<key row="1168" value="1" interpolation="3"/>
+			<key row="1232" value="900" interpolation="0"/>
 		</track>
 	</tracks>
 	<bookmarks/>
