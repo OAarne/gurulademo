@@ -112,6 +112,10 @@
 			<key row="1168" value="1" interpolation="3"/>
 			<key row="1232" value="900" interpolation="0"/>
 		</track>
+		<track name="tunnel_out">
+			<key row="1392" value="0" interpolation="2"/>
+			<key row="1440" value="70" interpolation="0"/>
+		</track>
 	</tracks>
 	<bookmarks/>
 </sync>
