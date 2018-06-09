@@ -15,6 +15,26 @@ void setup() {
   noiseSeed(123123);
 }
 
+PVector[] initMousePointerCoords() {
+  PVector[] ret = {
+    new PVector(0, 0),
+    new PVector(100, 100),
+    new PVector(55, 100),
+    new PVector(75, 135),
+    new PVector(55, 145),
+    new PVector(35, 110),
+    new PVector(0, 140),
+  };
+  
+  for(PVector v : ret) {
+    v.sub(50, 70);
+    v.mult(1. / 140);
+  }
+  
+  return ret;
+}
+PVector[] mousePointerCoords = initMousePointerCoords();
+
 void mousePointers(float size, int count, float d) {
   pushStyle();
   noStroke();
@@ -28,16 +48,11 @@ void mousePointers(float size, int count, float d) {
       fill(255, 0, 0);
     }
     translate(0, 0, d * ((float)i / Math.max(1.0, (float)count - 1.0) - 0.5));
-    scale(size / 140);
-    translate(-50, -70);
+    scale(size);
     beginShape();
-    vertex(0, 0);
-    vertex(100, 100);
-    vertex(55, 100);
-    vertex(75, 135);
-    vertex(55, 145);
-    vertex(35, 110);
-    vertex(0, 140);
+    for(PVector v : mousePointerCoords) {
+      vertex(v.x, v.y);
+    }
     endShape();
     popMatrix();
   }
