@@ -10,7 +10,7 @@ void settings() {
 PImage hourglass;
 
 void setup() {
-  moonlander = Moonlander.initWithSoundtrack(this, "tekno_127bpm.mp3", 127, 8);
+  moonlander = Moonlander.initWithSoundtrack(this, "Rhinoceros.mp3", 126, 8);
   moonlander.start();
   frameRate(60);
   noiseSeed(1337);
