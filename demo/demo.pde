@@ -162,11 +162,88 @@ void creditsEffect() {
   popStyle();
 }
 
+void boxTunnelEffect() {
+  pushStyle();
+  pushMatrix();
+  
+  noStroke();
+  
+  float time = (float)moonlander.getCurrentTime();
+  float beat = (float)moonlander.getCurrentRow() / 8 + 0.9;
+  
+  float light_r = 0.5;
+  float light_g = 0.1;
+  float light_b = 1.0;
+  
+  float ambient = 0.8;
+  ambientLight(255 * (1 - ambient), 255 * (1 - ambient), 255 * (1 - ambient));
+  
+  lightFalloff(1, 0, 0.00001);
+  
+  float light_beet = beat % 6;
+  
+  pointLight(255 * light_r, 255 * light_g, 255 * light_b, 0, 0, 2000 - 80 * light_beet * light_beet);
+  
+  light_beet = (beat + 3) % 6;
+  pointLight(255 * light_r, 255 * light_g, 255 * light_b, 0, 0, 2000 - 80 * light_beet * light_beet);
+  
+  background(0);
+  
+  float diameter = 200;
+  float jaggyness = 100;
+  float boxes_per_ring = 15;
+  float boxsize = PI * diameter / boxes_per_ring;
+  float depth = 100; 
+  
+  float zStart = 1000;
+  float zEnd = zStart - boxsize * depth;
+  
+  //translate(0, 0, -time*100);
+    
+  for (float d = 0; d < depth; ++d) {
+    
+    float pulse = pow((1.0 + sin(beat*2 + 6*PI * d / 100)) / 2, 1.5); 
+    
+    rotateZ(2*PI * noise(d) / 100.0);
+    
+    float ring_z = zStart + -d * boxsize;
+    
+    for (float i = 0; i < boxes_per_ring; ++i) {
+      pushMatrix(); 
+      
+      rotateZ(2*PI / 10 * noise(d, time));
+     
+      translate(0, 0, ring_z);
+      rotateZ(2*PI / boxes_per_ring * i);
+      
+      float c = noise(d / depth * 4 + time, 0.5 - i / boxes_per_ring); 
+      //c = (1+c)/2;
+      fill(255*c, 255*c, 255*c);
+  
+      float box_d = diameter + jaggyness / 2 - jaggyness * noise(i+d  +time);
+      
+      box_d -= pulse * diameter / 3; // (diameter / map(ring_z, zStart, zEnd, 4, 1));
+     
+      translate(0, box_d/2, 0);
+      
+      box(PI * box_d / boxes_per_ring);
+      //box(boxsize);
+      
+      popMatrix();
+    }
+    
+  }
+  
+  popMatrix();
+  popStyle();
+}
+
 void draw() {  
   moonlander.update();
   
   camera(0, 0, 1000, 0, 0, 0, 0, 1, 0);
   background(0);
+
   
   int effect = moonlander.getIntValue("effect");
   if(effect == 0) flyingPointerEffect();
