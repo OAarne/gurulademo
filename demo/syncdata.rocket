@@ -2,7 +2,7 @@
 	<tracks>
 		<track name="effect">
 			<key value="0" interpolation="0" row="0"/>
-			<key value="1" interpolation="0" row="840"/>
+			<key value="1" interpolation="0" row="856"/>
 		</track>
 		<track name="flyingPointerDepth">
 			<key value="0" interpolation="0" row="0"/>
@@ -29,6 +29,10 @@
 			<key value="0" interpolation="0" row="0"/>
 			<key value="0" interpolation="2" row="256"/>
 			<key value="0.6" interpolation="0" row="511"/>
+		</track>
+		<track name="creditsPos">
+			<key value="0" interpolation="1" row="856"/>
+			<key value="5000" interpolation="0" row="1023"/>
 		</track>
 		<track name="flyingPointerCount">
 			<key value="1" interpolation="0" row="0"/>
