@@ -1,191 +1,192 @@
 <sync rows="2880">
 	<tracks>
 		<track name="effect">
-			<key interpolation="0" row="0" value="0"/>
-			<key interpolation="0" row="512" value="1"/>
-			<key interpolation="0" row="896" value="2"/>
-			<key interpolation="0" row="944" value="2"/>
-			<key interpolation="0" row="1536" value="9"/>
-			<key interpolation="0" row="1664" value="3"/>
-			<key interpolation="0" row="1792" value="4"/>
-			<key interpolation="0" row="2304" value="5"/>
+			<key value="0" interpolation="0" row="0"/>
+			<key value="1" interpolation="0" row="512"/>
+			<key value="2" interpolation="0" row="896"/>
+			<key value="2" interpolation="0" row="944"/>
+			<key value="9" interpolation="0" row="1536"/>
+			<key value="3" interpolation="0" row="1664"/>
+			<key value="4" interpolation="0" row="1792"/>
+			<key value="5" interpolation="0" row="2304"/>
 		</track>
 		<track name="flyingPointerDepth">
-			<key interpolation="0" row="0" value="0"/>
-			<key interpolation="0" row="192" value="50"/>
-			<key interpolation="2" row="224" value="50"/>
-			<key interpolation="0" row="511" value="10"/>
+			<key value="0" interpolation="0" row="0"/>
+			<key value="50" interpolation="0" row="192"/>
+			<key value="50" interpolation="2" row="224"/>
+			<key value="10" interpolation="0" row="511"/>
 		</track>
 		<track name="flyingPointerMovement">
-			<key interpolation="0" row="0" value="0"/>
-			<key interpolation="2" row="192" value="0"/>
-			<key interpolation="0" row="304" value="1.5"/>
+			<key value="0" interpolation="0" row="0"/>
+			<key value="0" interpolation="2" row="192"/>
+			<key value="1.5" interpolation="0" row="304"/>
 		</track>
 		<track name="flyingPointerSize">
-			<key interpolation="0" row="0" value="20"/>
-			<key interpolation="2" row="128" value="20"/>
-			<key interpolation="2" row="192" value="600"/>
-			<key interpolation="0" row="511" value="100"/>
+			<key value="20" interpolation="0" row="0"/>
+			<key value="20" interpolation="2" row="128"/>
+			<key value="600" interpolation="2" row="192"/>
+			<key value="100" interpolation="0" row="511"/>
 		</track>
 		<track name="flyingPointerType">
-			<key interpolation="0" row="256" value="1"/>
+			<key value="1" interpolation="0" row="256"/>
 		</track>
 		<track name="flyingPointerLightIntensity">
-			<key interpolation="0" row="0" value="0"/>
-			<key interpolation="2" row="256" value="0"/>
-			<key interpolation="0" row="511" value="0.6"/>
+			<key value="0" interpolation="0" row="0"/>
+			<key value="0" interpolation="2" row="256"/>
+			<key value="0.6" interpolation="0" row="511"/>
 		</track>
 		<track name="creditsPos">
-			<key interpolation="1" row="1440" value="0"/>
-			<key interpolation="0" row="1504" value="5000"/>
+			<key value="0" interpolation="1" row="1440"/>
+			<key value="5000" interpolation="0" row="1504"/>
 		</track>
 		<track name="flyingPointerCount">
-			<key interpolation="0" row="0" value="1"/>
-			<key interpolation="1" row="320" value="1"/>
-			<key interpolation="0" row="511" value="20"/>
-			<key interpolation="1" row="512" value="0"/>
-			<key interpolation="1" row="541" value="0.3"/>
-			<key interpolation="1" row="558" value="0.6"/>
-			<key interpolation="1" row="584" value="0.6"/>
-			<key interpolation="0" row="599" value="-0.33"/>
-			<key interpolation="0" row="838" value="0"/>
+			<key value="1" interpolation="0" row="0"/>
+			<key value="1" interpolation="1" row="320"/>
+			<key value="20" interpolation="0" row="511"/>
+			<key value="0" interpolation="1" row="512"/>
+			<key value="0.3" interpolation="1" row="541"/>
+			<key value="0.6" interpolation="1" row="558"/>
+			<key value="0.6" interpolation="1" row="584"/>
+			<key value="-0.33" interpolation="0" row="599"/>
+			<key value="0" interpolation="0" row="838"/>
 		</track>
 		<track name="flyingPointerBlowUp">
-			<key interpolation="3" row="504" value="0"/>
-			<key interpolation="1" row="512" value="2000"/>
-			<key interpolation="0" row="599" value="0.5"/>
-			<key interpolation="2" row="640" value="1"/>
-			<key interpolation="2" row="644" value="1.4"/>
-			<key interpolation="2" row="648" value="1"/>
-			<key interpolation="2" row="652" value="1.4"/>
-			<key interpolation="2" row="656" value="1"/>
-			<key interpolation="2" row="660" value="1.4"/>
-			<key interpolation="2" row="664" value="1"/>
-			<key interpolation="2" row="668" value="1.4"/>
-			<key interpolation="2" row="672" value="1"/>
-			<key interpolation="2" row="676" value="1.4"/>
-			<key interpolation="2" row="680" value="1"/>
-			<key interpolation="2" row="684" value="1.4"/>
-			<key interpolation="2" row="688" value="1"/>
-			<key interpolation="2" row="692" value="1.4"/>
-			<key interpolation="2" row="696" value="1"/>
-			<key interpolation="2" row="700" value="1.4"/>
-			<key interpolation="2" row="704" value="1"/>
-			<key interpolation="2" row="708" value="1.4"/>
-			<key interpolation="2" row="712" value="1"/>
-			<key interpolation="2" row="716" value="1.4"/>
-			<key interpolation="2" row="720" value="1"/>
-			<key interpolation="2" row="724" value="1.4"/>
-			<key interpolation="2" row="728" value="1"/>
-			<key interpolation="2" row="732" value="1.4"/>
-			<key interpolation="2" row="736" value="1"/>
-			<key interpolation="2" row="740" value="1.4"/>
-			<key interpolation="2" row="744" value="1"/>
-			<key interpolation="2" row="748" value="1.4"/>
-			<key interpolation="2" row="752" value="1"/>
-			<key interpolation="2" row="756" value="1.4"/>
-			<key interpolation="2" row="760" value="1"/>
-			<key interpolation="2" row="764" value="1.4"/>
-			<key interpolation="0" row="768" value="1"/>
-			<key interpolation="1" row="832" value="1"/>
-			<key interpolation="0" row="840" value="20"/>
+			<key value="0" interpolation="3" row="504"/>
+			<key value="2000" interpolation="1" row="512"/>
+			<key value="0.5" interpolation="0" row="599"/>
+			<key value="1" interpolation="2" row="640"/>
+			<key value="1.4" interpolation="2" row="644"/>
+			<key value="1" interpolation="2" row="648"/>
+			<key value="1.4" interpolation="2" row="652"/>
+			<key value="1" interpolation="2" row="656"/>
+			<key value="1.4" interpolation="2" row="660"/>
+			<key value="1" interpolation="2" row="664"/>
+			<key value="1.4" interpolation="2" row="668"/>
+			<key value="1" interpolation="2" row="672"/>
+			<key value="1.4" interpolation="2" row="676"/>
+			<key value="1" interpolation="2" row="680"/>
+			<key value="1.4" interpolation="2" row="684"/>
+			<key value="1" interpolation="2" row="688"/>
+			<key value="1.4" interpolation="2" row="692"/>
+			<key value="1" interpolation="2" row="696"/>
+			<key value="1.4" interpolation="2" row="700"/>
+			<key value="1" interpolation="2" row="704"/>
+			<key value="1.4" interpolation="2" row="708"/>
+			<key value="1" interpolation="2" row="712"/>
+			<key value="1.4" interpolation="2" row="716"/>
+			<key value="1" interpolation="2" row="720"/>
+			<key value="1.4" interpolation="2" row="724"/>
+			<key value="1" interpolation="2" row="728"/>
+			<key value="1.4" interpolation="2" row="732"/>
+			<key value="1" interpolation="2" row="736"/>
+			<key value="1.4" interpolation="2" row="740"/>
+			<key value="1" interpolation="2" row="744"/>
+			<key value="1.4" interpolation="2" row="748"/>
+			<key value="1" interpolation="2" row="752"/>
+			<key value="1.4" interpolation="2" row="756"/>
+			<key value="1" interpolation="2" row="760"/>
+			<key value="1.4" interpolation="2" row="764"/>
+			<key value="1" interpolation="0" row="768"/>
+			<key value="1" interpolation="1" row="832"/>
+			<key value="20" interpolation="0" row="840"/>
 		</track>
 		<track name="colorEffectSineWaveWidth">
-			<key interpolation="1" row="512" value="0"/>
-			<key interpolation="1" row="576" value="-0.4"/>
-			<key interpolation="1" row="640" value="-0.2"/>
-			<key interpolation="1" row="768" value="0.18"/>
-			<key interpolation="0" row="895" value="0.5"/>
+			<key value="0" interpolation="1" row="512"/>
+			<key value="-0.4" interpolation="1" row="576"/>
+			<key value="-0.2" interpolation="1" row="640"/>
+			<key value="0.18" interpolation="1" row="768"/>
+			<key value="0.5" interpolation="0" row="895"/>
 		</track>
 		<track name="colorEffectSineWaveHeight">
-			<key interpolation="1" row="512" value="-0.1"/>
-			<key interpolation="1" row="576" value="0.1"/>
-			<key interpolation="2" row="640" value="0"/>
-			<key interpolation="1" row="768" value="-0.266"/>
-			<key interpolation="0" row="895" value="-0.33"/>
+			<key value="-0.1" interpolation="1" row="512"/>
+			<key value="0.1" interpolation="1" row="576"/>
+			<key value="0" interpolation="2" row="640"/>
+			<key value="-0.266" interpolation="1" row="768"/>
+			<key value="-0.33" interpolation="0" row="895"/>
 		</track>
 		<track name="colorEffectWaterLR">
-			<key interpolation="1" row="512" value="0.5"/>
-			<key interpolation="1" row="576" value="0.6"/>
-			<key interpolation="2" row="640" value="0.3"/>
-			<key interpolation="3" row="768" value="0.2"/>
-			<key interpolation="1" row="784" value="0.4"/>
-			<key interpolation="0" row="895" value="0.9"/>
+			<key value="0.5" interpolation="1" row="512"/>
+			<key value="0.6" interpolation="1" row="576"/>
+			<key value="0.3" interpolation="2" row="640"/>
+			<key value="0.2" interpolation="3" row="768"/>
+			<key value="0.4" interpolation="1" row="784"/>
+			<key value="0.9" interpolation="0" row="895"/>
 		</track>
 		<track name="colorEffectWaterUD">
-			<key interpolation="1" row="512" value="0.7"/>
-			<key interpolation="1" row="576" value="0.5"/>
-			<key interpolation="1" row="640" value="-0.1"/>
-			<key interpolation="3" row="768" value="0.3"/>
-			<key interpolation="0" row="895" value="0.5"/>
+			<key value="0.7" interpolation="1" row="512"/>
+			<key value="0.5" interpolation="1" row="576"/>
+			<key value="-0.1" interpolation="1" row="640"/>
+			<key value="0.3" interpolation="3" row="768"/>
+			<key value="0.5" interpolation="0" row="895"/>
 		</track>
 		<track name="cubeContent">
-			<key interpolation="0" row="944" value="0"/>
-			<key interpolation="2" row="1020" value="0"/>
-			<key interpolation="0" row="1028" value="1"/>
+			<key value="-1" interpolation="2" row="896"/>
+			<key value="0" interpolation="0" row="899"/>
+			<key value="0" interpolation="2" row="1020"/>
+			<key value="1" interpolation="0" row="1028"/>
 		</track>
 		<track name="cubeArrowSize">
-			<key interpolation="1" row="1120" value="0"/>
-			<key interpolation="0" row="1152" value="1"/>
+			<key value="0" interpolation="1" row="1120"/>
+			<key value="1" interpolation="0" row="1152"/>
 		</track>
 		<track name="waves_zoom">
-			<key interpolation="0" row="1536" value="1"/>
-			<key interpolation="0" row="1664" value="1"/>
-			<key interpolation="3" row="1728" value="1"/>
-			<key interpolation="0" row="1792" value="900"/>
+			<key value="1" interpolation="0" row="1536"/>
+			<key value="1" interpolation="0" row="1664"/>
+			<key value="1" interpolation="3" row="1728"/>
+			<key value="900" interpolation="0" row="1792"/>
 		</track>
 		<track name="tunnel_out">
-			<key interpolation="3" row="2256" value="0"/>
-			<key interpolation="0" row="2304" value="0.8"/>
+			<key value="0" interpolation="3" row="2256"/>
+			<key value="0.8" interpolation="0" row="2304"/>
 		</track>
 		<track name="fade">
-			<key interpolation="0" row="0" value="1"/>
-			<key interpolation="1" row="856" value="0"/>
-			<key interpolation="0" row="857" value="1"/>
-			<key interpolation="1" row="942" value="1"/>
-			<key interpolation="0" row="943" value="0"/>
-			<key interpolation="1" row="944" value="0"/>
-			<key interpolation="0" row="945" value="1"/>
-			<key interpolation="1" row="1118" value="1"/>
-			<key interpolation="0" row="1119" value="0"/>
-			<key interpolation="1" row="1120" value="0"/>
-			<key interpolation="0" row="1121" value="1"/>
+			<key value="1" interpolation="0" row="0"/>
+			<key value="0" interpolation="1" row="856"/>
+			<key value="1" interpolation="0" row="857"/>
+			<key value="1" interpolation="1" row="942"/>
+			<key value="0" interpolation="0" row="943"/>
+			<key value="0" interpolation="1" row="944"/>
+			<key value="1" interpolation="0" row="945"/>
+			<key value="1" interpolation="1" row="1118"/>
+			<key value="0" interpolation="0" row="1119"/>
+			<key value="0" interpolation="1" row="1120"/>
+			<key value="1" interpolation="0" row="1121"/>
 		</track>
 		<track name="titleTextAlpha">
-			<key interpolation="1" row="888" value="0"/>
-			<key interpolation="0" row="896" value="1"/>
+			<key value="0" interpolation="1" row="888"/>
+			<key value="1" interpolation="0" row="896"/>
 		</track>
 		<track name="treeCursorParam">
-			<key interpolation="1" row="2304" value="0"/>
-			<key interpolation="0" row="2815" value="1"/>
-			<key interpolation="0" row="2816" value="1"/>
+			<key value="0" interpolation="1" row="2304"/>
+			<key value="1" interpolation="0" row="2815"/>
+			<key value="1" interpolation="0" row="2816"/>
 		</track>
 		<track name="dangle_factor">
-			<key interpolation="1" row="1536" value="0"/>
-			<key interpolation="0" row="1664" value="1"/>
+			<key value="0" interpolation="1" row="1536"/>
+			<key value="1" interpolation="0" row="1664"/>
 		</track>
 		<track name="tunnel_cursor">
-			<key interpolation="1" row="2048" value="0"/>
-			<key interpolation="1" row="2288" value="1"/>
-			<key interpolation="0" row="2304" value="100"/>
+			<key value="0" interpolation="1" row="2048"/>
+			<key value="1" interpolation="1" row="2288"/>
+			<key value="100" interpolation="0" row="2304"/>
 		</track>
 		<track name="tunnel_spiral">
-			<key interpolation="1" row="1920" value="0"/>
-			<key interpolation="0" row="2304" value="1"/>
+			<key value="0" interpolation="1" row="1920"/>
+			<key value="1" interpolation="0" row="2304"/>
 		</track>
 		<track name="cubeArrowBling">
-			<key interpolation="3" row="1276" value="0"/>
-			<key interpolation="0" row="1284" value="1"/>
+			<key value="0" interpolation="3" row="1276"/>
+			<key value="1" interpolation="0" row="1284"/>
 		</track>
 		<track name="cubePlasmaCoef">
-			<key interpolation="0" row="1008" value="1"/>
-			<key interpolation="2" row="1504" value="1"/>
-			<key interpolation="0" row="1536" value="0"/>
+			<key value="1" interpolation="0" row="1008"/>
+			<key value="1" interpolation="2" row="1504"/>
+			<key value="0" interpolation="0" row="1536"/>
 		</track>
 		<track name="waves_fadein">
-			<key interpolation="1" row="1664" value="0"/>
-			<key interpolation="0" row="1696" value="1"/>
-			<key interpolation="0" row="1728" value="1"/>
+			<key value="0" interpolation="1" row="1664"/>
+			<key value="1" interpolation="0" row="1696"/>
+			<key value="1" interpolation="0" row="1728"/>
 		</track>
 	</tracks>
 	<bookmarks/>
