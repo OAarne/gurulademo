@@ -409,7 +409,8 @@ void cubeEffect() {
             PVector spherePos = new PVector(u - 0.5, v - 0.5, w - 0.5);
             spherePos.normalize();
             
-            float h = 0.41 * cos(1.35 * u + 1.54 * v - 0.39 * w - 1.21 * t) - 0.75 * sin(1.53 * u + 1.15 * v + 0.37 * w + 1.51 * t) - 0.32 * cos(-0.75 * u + v + w + 3.5 * t) + 0.72 * t;
+            float t2 = 0.6 * (t - 37) + 37;
+            float h = 0.41 * cos(1.35 * u + 1.54 * v - 0.39 * w - 1.21 * t2) - 0.75 * sin(1.53 * u + 1.15 * v + 0.37 * w + 1.51 * t2) - 0.32 * cos(-0.75 * u + v + w + 3.5 * t2) + 0.72 * t2;
             
             h *= 10; 
             float val = h - floor(h);
