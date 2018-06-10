@@ -176,6 +176,11 @@
 			<key row="1276" interpolation="3" value="0"/>
 			<key row="1284" interpolation="0" value="1"/>
 		</track>
+		<track name="cubePlasmaCoef">
+			<key row="1008" interpolation="0" value="1"/>
+			<key row="1504" interpolation="2" value="1"/>
+			<key row="1536" interpolation="0" value="0"/>
+		</track>
 	</tracks>
 	<bookmarks/>
 </sync>

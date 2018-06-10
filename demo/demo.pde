@@ -294,6 +294,7 @@ void cubeEffect() {
   float content = (float)moonlander.getValue("cubeContent");
   float arrowSize = (float)moonlander.getValue("cubeArrowSize");
   float arrowBling = (float)moonlander.getValue("cubeArrowBling");
+  float plasmaCoef = (float)moonlander.getValue("cubePlasmaCoef");
   
   float t = (float)moonlander.getCurrentTime();
   rotateX(t);
@@ -410,9 +411,10 @@ void cubeEffect() {
             
             float h = 0.41 * cos(1.35 * u + 1.54 * v - 0.39 * w - 1.21 * t) - 0.75 * sin(1.53 * u + 1.15 * v + 0.37 * w + 1.51 * t) - 0.32 * cos(-0.75 * u + v + w + 3.5 * t) + 0.72 * t;
             
-            h *= 10;
+            h *= 10; 
             float val = h - floor(h);
             val = cubicPulse(0.5, 0.2, val);
+            val *= plasmaCoef;
             
             PVector origin = new PVector(0, 0, 0);
             
@@ -435,6 +437,7 @@ void cubeEffect() {
                 }
               }
               
+              dist /= Math.max(plasmaCoef, 0.4);
               if(dist > -0.1) {
                 if(dist < 0) {
                   if(dist > -0.05) {
@@ -442,9 +445,10 @@ void cubeEffect() {
                   } else {
                     val = Math.max(val, 1 - Math.abs(dist + 0.05) / 0.05);
                   }
+                  val *= Math.min(plasmaCoef * 7, 1);
                 } else {
                   val = Math.min(1 + (dist - (0.1 + 0.05 * sin(2 * (float)Math.PI * meas))) / 0.05, 1);
-                  val *= arrowBling;
+                  val *= arrowBling * plasmaCoef;
                 }
               }
             }
