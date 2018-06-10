@@ -741,6 +741,7 @@ void wavesEffect() {
   
   noStroke();
   
+  float fadein = (float)moonlander.getValue("waves_fadein");
   int zoom = moonlander.getIntValue("waves_zoom");
   
   float light_r = 0.5;
@@ -773,7 +774,7 @@ void wavesEffect() {
       
       translate(-x * boxSize * (zoom - 1)/1000, -y * boxSize * (zoom - 1)/1000, -pow((zoom - 1)/sqrt(x*x + y*y),1.2) );
       
-      box(boxSize * 2* (1 - 2* noise(x+40,y+30)));
+      box(fadein* boxSize * 2* (1 - 2* noise(x+40,y+30)));
       
       popMatrix();
     }
