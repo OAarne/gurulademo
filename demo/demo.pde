@@ -297,6 +297,7 @@ void cubeEffect() {
   
   int content = moonlander.getIntValue("cubeContent");
   float arrowSize = (float)moonlander.getValue("cubeArrowSize");
+  float arrowBling = (float)moonlander.getValue("cubeArrowBling");
   
   float t = (float)moonlander.getCurrentTime();
   rotateX(t);
@@ -340,7 +341,7 @@ void cubeEffect() {
     };
     if(arrowSize > 0) {
       for(int polyi = 0; polyi < polygons.length; ++polyi) {
-        PVector axis = new PVector(noise(polyi, 0.1, 0.5) - 0.5, noise(polyi, 0.2, 0.5) - 0.5, noise(polyi, 0.3, 0.5) - 0.5);
+        PVector axis = new PVector(noise(polyi, 2.1, 0.5) - 0.5, noise(polyi, 13.2, 0.5) - 0.5, noise(polyi, -5.7, 0.5) - 0.5);
         axis.normalize();
         
         PVector rot1 = axis.cross(new PVector(1, 0, 0));
@@ -348,7 +349,7 @@ void cubeEffect() {
         PVector rot2 = axis.cross(rot1);
         rot2.normalize();
         
-        float myt = 5 * t * noise(polyi, 0.5);
+        float myt = 2 * t * noise(polyi, 1.18);
         
         PVector base = PVector.add(PVector.mult(rot1, cos(myt)), PVector.mult(rot2, sin(myt)));
         base = PVector.add(base, PVector.mult(axis, noise(polyi, 0.4)));
@@ -447,7 +448,8 @@ void cubeEffect() {
                     val = Math.max(val, 1 - Math.abs(dist + 0.05) / 0.05);
                   }
                 } else {
-                  val = 0;
+                  val = Math.min(1 + (dist - (0.1 + 0.05 * sin(2 * (float)Math.PI * meas))) / 0.05, 1);
+                  val *= arrowBling;
                 }
               }
             }
