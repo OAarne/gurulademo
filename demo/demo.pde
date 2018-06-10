@@ -8,9 +8,8 @@ color teal = color(123,241,246);
 color paleBlue = color(160,191,239);
 
 void settings() {
-  size(640, 480, P3D);
-  //size(1920, 1080, P3D);
-  //fullScreen(P3D);
+  size(640, 360, P3D);
+//  fullScreen(P3D);
 } 
 
 PImage hourglass;
@@ -851,7 +850,7 @@ void treeEffect() {
   
   float jd = 2 * time;
   float j1 = -10 - jd;
-  float j2 = 9 - jd;
+  float j2 = 10 - jd;
   
   for (int i = -7; i <= 7; ++i) {
     for (int j = (int)j1; j < (int)j2; ++j) {
@@ -905,7 +904,11 @@ void namedropEffect() {
 void draw() {  
   moonlander.update();
   
-  perspective();
+  float fov = PI/3.0;
+  float cameraZ = (height/2.0) / tan(fov/2.0);
+  perspective(fov, float(width)/float(height), 
+              cameraZ/100.0, cameraZ*10.0);
+  
   camera(0, 0, 1000, 0, 0, 0, 0, 1, 0);
   background(0);
  
