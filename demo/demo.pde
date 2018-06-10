@@ -429,6 +429,7 @@ void cubeEffect() {
                     PVector p1 = polygons[polyi][i1];
                     
                     mydist = Math.min(mydist, planeDist(origin, p0, p1, spherePos));
+                    if(mydist < -0.1) break;
                   }
                   dist = Math.max(dist, mydist);
                 }
