@@ -214,6 +214,8 @@ void boxTunnelEffect() {
   //float zEnd = zStart - boxsize * depth;
   
   //translate(0, 0, -time*100);
+  
+  float tunnel_spiral = (float) moonlander.getValue("tunnel_spiral");
     
   for (float d = 0; d < depth; ++d) {
     
@@ -233,13 +235,20 @@ void boxTunnelEffect() {
       
       float c = noise(d / depth * 4 + time, 0.5 - i / boxes_per_ring); 
       //c = (1+c)/2;
-      fill(255*c, 255*c, 255*c);
+      float mdist = ((i + d + floor(time*5)) % boxes_per_ring);
+      mdist = min(mdist, boxes_per_ring - mdist);
+      
+      if (tunnel_spiral * 100 > d && mdist < 3) {
+        float n = noise(d / depth + 0.1 * mdist);
+        fill(red(fuchsia) * n, green(fuchsia) * n, blue(fuchsia) * n);
+      } else
+        fill(255*c, 255*c, 255*c);
   
       float box_d = diameter + jaggyness / 2 - jaggyness * noise(i+d  +time);
       
       box_d -= pulse * diameter / 3; // (diameter / map(ring_z, zStart, zEnd, 4, 1));
      
-      translate(0, box_d/2 * (fadeout / 100 * (d+2) + 1), 0);
+      translate(0, box_d/2 * (fadeout / 100 * (d+2) + 1), noise(d/depth) * 30);
       
       box(PI * box_d / boxes_per_ring);
       //box(boxsize);
