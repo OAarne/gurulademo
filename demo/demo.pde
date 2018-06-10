@@ -789,7 +789,7 @@ void puu(float x, float y, float dist, float d) {
   
   float time = (float)moonlander.getCurrentTime();
   
-  if (noise(x,y,d) < 0.10 * d) return;
+  if (noise(x,y,d) < 0.10 * d && d > 2.5) return;
   
   float p = -20 / d;
  
