@@ -270,22 +270,18 @@ void boxTunnelEffect() {
   popStyle();
 }
 
-float cubicPulse( float c, float w, float x ){
+static float cubicPulse( float c, float w, float x ){
   x = abs(x - c);
   if( x>w ) return 0.0;
   x /= w;
   return 1.0 - x*x*(3.0-2.0*x);
 }
 
-float planeDist(PVector a, PVector b, PVector c, PVector p) {
+static float planeDist(PVector a, PVector b, PVector c, PVector p) {
   PVector normal = PVector.sub(b, a).cross(PVector.sub(c, a));
   normal.normalize();
   PVector d = PVector.sub(p, a);
   return d.dot(normal);
-}
-
-boolean is2(int a, int b, int c, int d) {
-  return (a == c && b == d) || (a == d && b == c);
 }
 
 void cubeEffect() {
