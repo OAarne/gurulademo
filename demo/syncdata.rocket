@@ -136,7 +136,7 @@
 		</track>
 		<track name="tunnel_out">
 			<key interpolation="3" row="2256" value="0"/>
-			<key interpolation="0" row="2304" value="0.9"/>
+			<key interpolation="0" row="2304" value="0.8"/>
 		</track>
 		<track name="fade">
 			<key interpolation="0" row="0" value="1"/>
@@ -166,7 +166,8 @@
 		</track>
 		<track name="tunnel_cursor">
 			<key interpolation="1" row="2048" value="0"/>
-			<key interpolation="0" row="2304" value="1"/>
+			<key interpolation="1" row="2288" value="1"/>
+			<key interpolation="0" row="2304" value="100"/>
 		</track>
 		<track name="tunnel_spiral">
 			<key interpolation="1" row="1920" value="0"/>
