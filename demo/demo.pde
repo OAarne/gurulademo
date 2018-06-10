@@ -321,7 +321,7 @@ void cubeEffect() {
     for(int i = 0; i < 6; ++i) {
       PGraphics g = graphics[i];
       g.beginDraw();
-      g.background(100);
+      g.background(100 * (1 + Math.min(content, 0)));
       g.imageMode(CENTER);
       g.translate(0.5 * g.width, 0.5 * g.height);
       g.rotate(0.5 * (float)Math.PI * (measInt + measFrac * measFrac * (3 - 2 * measFrac)));
@@ -478,8 +478,8 @@ void cubeEffect() {
     if(i == 3) rotateX(-0.5 * (float)Math.PI);
     if(i == 4) rotateY(0.5 * (float)Math.PI);
     if(i == 5) rotateY(-0.5 * (float)Math.PI);
-    translate(0, 0, 275);
-    image(graphics[i], 0, 0, 550, 550);
+    translate(0, 0, 285);
+    image(graphics[i], 0, 0, 570, 570);
     popMatrix();
   }
   
