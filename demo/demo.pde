@@ -3,15 +3,15 @@ import ddf.minim.*;
 
 Moonlander moonlander;
 
-color fuchsia = color(253,66,247);
-color teal = color(55,252,252);
+color fuchsia = color(254,127,250);
+color teal = color(123,241,246);
 color paleBlue = color(160,191,239);
 
 void settings() {
   size(640, 480, P3D);
   //size(1920, 1080, P3D);
   //fullScreen(P3D);
-}
+} 
 
 PImage hourglass;
 
@@ -77,7 +77,7 @@ void mousePointer3D(float size, float r) {
   noStroke();
   
   // Pohjat
-  fill(255, 255, 255);
+  fill(220, 220, 220);
   for(int i = -1; i <= 1; i += 2) {
     pushMatrix();
     translate(0, 0, r * i);
@@ -96,10 +96,11 @@ void mousePointer3D(float size, float r) {
   PVector prev = mousePointerCoords[mousePointerCoords.length - 1];
   int idx = 0;
   for(PVector cur : mousePointerCoords) {
+    float darken = 0.8;
     if(idx % 2 == 0) {
-      fill(teal);
+      fill(red(teal)*darken,green(teal)*darken,blue(teal)*darken);
     } else {
-      fill(fuchsia);
+      fill(red(fuchsia)*darken,green(fuchsia)*darken,blue(fuchsia)*darken);
     }
     beginShape();
     float u = r / Math.max(size, 1.0);
@@ -132,9 +133,9 @@ void flyingPointerEffect() {
   for(int i = 1; i <= Math.ceil(count); ++i) {
     float t2 = t - 100 * i;
     pushMatrix();
-    scale(blowup);
     float x = movement * 600;
     translate(2 * x * (noise(t2, 0) - 0.5), 2 * x * (noise(t2, 1) - 0.5), 2 * x * (noise(t2, 2) - 0.5));
+    translate(0, 0, blowup);
     float y = movement * 5;
     rotateY(y * noise(t2, 3));
     rotateX(y * noise(t2, 4));
@@ -868,7 +869,7 @@ void treeEffect() {
       if (j % 2 == 0) stroke(hsvToRgb(hue(fuchsia)/255, saturation(fuchsia)/255, map(j, j1, j2, 0, 1) * fadeout));
       if (j % 2 != 0) stroke(hsvToRgb(hue(teal)/255, saturation(teal)/255, map(j, j1, j2, 0, 1) * fadeout));
       if (j % 3 == 0) stroke(hsvToRgb(hue(paleBlue)/255, saturation(paleBlue)/255, map(j, j1, j2, 0, 1) * fadeout));
-      strokeWeight(height / 480);
+      strokeWeight(height / 240);
       puu(i,j,dz,1);    
       translate(-dx, 0, -dz);
     }
