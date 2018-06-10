@@ -11,7 +11,7 @@ void settings() {
   size(640, 480, P3D);
   //size(1920, 1080, P3D);
   //fullScreen(P3D);
-}
+} 
 
 PImage hourglass;
 
@@ -132,9 +132,9 @@ void flyingPointerEffect() {
   for(int i = 1; i <= Math.ceil(count); ++i) {
     float t2 = t - 100 * i;
     pushMatrix();
-    scale(blowup);
     float x = movement * 600;
     translate(2 * x * (noise(t2, 0) - 0.5), 2 * x * (noise(t2, 1) - 0.5), 2 * x * (noise(t2, 2) - 0.5));
+    translate(0, 0, blowup);
     float y = movement * 5;
     rotateY(y * noise(t2, 3));
     rotateX(y * noise(t2, 4));
