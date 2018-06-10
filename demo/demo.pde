@@ -322,7 +322,7 @@ void cubeEffect() {
     popMatrix();
   }
   
-  float meas = (float)moonlander.getCurrentRow() / 8;
+  float meas = (float)moonlander.getCurrentRow() / 8 + 0.5;
   float measInt = (float)Math.floor(meas);
   float measFrac = meas - measInt;
   
