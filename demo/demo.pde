@@ -13,6 +13,16 @@ void settings() {
 } 
 
 PImage hourglass;
+PGraphics graphics[];
+
+String name = "dangling pointer.";
+
+String space = "                                                         ";
+String credits =
+  "Music: 'Rhinoceros' by Kevin MacLeod (CC BY 3.0). " + space +
+  "Greetings to: all fuksipallerot and n:th year students of Gurula. " + space +
+//  "Fuckings to: Alepa Otaniemi for not having PowerKing!" + space +
+  "Team Gurula";
 
 void setup() {
   moonlander = Moonlander.initWithSoundtrack(this, "Rhinoceros-clip.mp3", 126, 8);
@@ -21,6 +31,10 @@ void setup() {
   noiseSeed(1337);
   
   hourglass = loadImage("hourglass.png");
+  graphics = new PGraphics[6];
+  for(int i = 0; i < 6; ++i) {
+    graphics[i] = createGraphics(100, 100);
+  }
   
   noCursor();
 }
@@ -151,28 +165,6 @@ void flyingPointerEffect() {
     }
     popMatrix();
   }
-}
-
-void creditsEffect() {
-  pushStyle();
-  pushMatrix();
-  
-  background(0, 0, 0);
-  
-  float pos = (float)moonlander.getValue("creditsPos");
-  translate(0, -pos);
-  String text =
-    "Music: 'Rhinoceros' by Kevin MacLeod (CC BY 3.0).\n\n" +
-    "Greetings to: all fuksipallerot and n:th year students of Gurula.\n\n" +
-    "Fuckings to: Alepa Otaniemi for not having PowerKing!\n\n" +
-    "Morbi aliquet ante vitae faucibus porta. In eleifend odio a purus efficitur, non molestie ipsum dictum. Mauris cursus justo at pellentesque suscipit. Phasellus sit amet orci at turpis luctus congue. Integer nec justo libero. Cras convallis odio a tortor eleifend finibus. Proin ac fermentum lorem, nec sollicitudin sem. Proin lacinia quis arcu vel vehicula. Aliquam erat volutpat.";
-  
-  fill(255);
-  textSize(100);
-  text(text, -700, 600, 1400, 1000000);
-  
-  popMatrix();
-  popStyle();
 }
 
 void boxTunnelEffect() {
@@ -325,11 +317,6 @@ void cubeEffect() {
   float meas = (float)moonlander.getCurrentRow() / 8 + 0.5;
   float measInt = (float)Math.floor(meas);
   float measFrac = meas - measInt;
-  
-  PGraphics graphics[] = new PGraphics[6];
-  for(int i = 0; i < 6; ++i) {
-    graphics[i] = createGraphics(100, 100);
-  }
   
   if(content == 0) {
     for(int i = 0; i < 6; ++i) {
@@ -817,13 +804,6 @@ void puu(float x, float y, float dist, float d) {
   translate(0,-p,0);
 }
 
-String space = "                                                         ";
-String credits =
-  "Music: 'Rhinoceros' by Kevin MacLeod (CC BY 3.0). " + space +
-  "Greetings to: all fuksipallerot and n:th year students of Gurula. " + space +
-//  "Fuckings to: Alepa Otaniemi for not having PowerKing!" + space +
-  "Team Gurula";
-
 void treeEffect() {
   pushStyle();
   pushMatrix();
@@ -884,7 +864,7 @@ void namedropEffect() {
   
   fill(255);
   textSize(100);
-  text("dangling pointer.", -600, -200, 0);
+  text(name, -600, -200, 0);
   
   float factor = (float)moonlander.getValue("dangle_factor");
   
@@ -901,6 +881,8 @@ void namedropEffect() {
   popStyle();
 }
 
+boolean firstFrame = true;
+
 void draw() {  
   moonlander.update();
   
@@ -911,7 +893,14 @@ void draw() {
   
   camera(0, 0, 1000, 0, 0, 0, 0, 1, 0);
   background(0);
- 
+  
+  if(firstFrame) {
+    textSize(100);
+    textWidth(name);
+    textWidth(credits);
+    firstFrame = false;
+  }
+
   int effect = moonlander.getIntValue("effect");
 
   if(effect == 0) flyingPointerEffect();
