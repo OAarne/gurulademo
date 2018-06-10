@@ -505,7 +505,7 @@ color hsvToRgb(double h, double s, double v) {
     return color(Math.round(r * 255), Math.round(g * 255), Math.round(b * 255));
 }
 
-PImage colorWheel(int w, int h) {
+PImage colorWheel(double cwDelta, double fadeout, int w, int h) {
   PImage img = createImage(w, h, RGB);
   img.loadPixels();
   int midX = img.width / 2;
@@ -524,11 +524,11 @@ PImage colorWheel(int w, int h) {
 
           int dx = x - midX;
           int dy = y - midY;
-          double normAngle = (atan2(dx, dy) - Math.PI) / (-2.0 * Math.PI);
+          double normAngle = (((atan2(dx, dy) - Math.PI) / (-2.0 * Math.PI)) + cwDelta) % 1.0;
 
           double saturation = d < halfRadius ? d / halfRadius : 1.0;
           double value = d < halfRadius ? 1.0 : (radius - d) / halfRadius;
-          img.pixels[y * img.width + x] = hsvToRgb(normAngle, saturation, value);
+          img.pixels[y * img.width + x] = hsvToRgb(normAngle, saturation, value * fadeout);
       }
   }
   img.updatePixels();
@@ -711,7 +711,12 @@ void dezgegEffect() {
   ortho();
   translate(-width / 2, -height / 2);
   int wh = Math.min(width, height) / 4;
-  PImage img = colorWheel(wh, wh);
+
+  float timeSin = (float)moonlander.getValue("colorEffectTimeSinMult") * cos(2 * (float)Math.PI * (0.125 * (float)moonlander.getCurrentRow()));
+
+  float cwDelta = (float)moonlander.getValue("colorEffectHueDelta");
+  float cwFade = (float)moonlander.getValue("colorEffectFadeout");
+  PImage img = colorWheel(cwDelta + timeSin, cwFade, wh, wh);
 
   int swWidth = (int)(moonlander.getValue("colorEffectSineWaveWidth") * wh);
   int swHeight = (int)(moonlander.getValue("colorEffectSineWaveHeight") * wh);
@@ -719,6 +724,9 @@ void dezgegEffect() {
   int waterLR = (int)(moonlander.getValue("colorEffectWaterLR") * wh);
   int waterUD = (int)(moonlander.getValue("colorEffectWaterUD") * wh);
   img = waterWith(img, img, waterLR, waterUD);
+  int sw2Width = (int)(moonlander.getValue("colorEffectSineWave2Width") * wh);
+  int sw2Height = (int)(moonlander.getValue("colorEffectSineWave2Height") * wh);
+  img = sineWaveBoth(img, 4, sw2Height, 2, sw2Width);
 
   drawTiled(img);
   //titleText();

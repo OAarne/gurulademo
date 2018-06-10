@@ -91,33 +91,64 @@
 			<key value="20" interpolation="0" row="840"/>
 		</track>
 		<track name="colorEffectSineWaveWidth">
-			<key value="0" interpolation="1" row="512"/>
-			<key value="-0.4" interpolation="1" row="576"/>
-			<key value="-0.2" interpolation="1" row="640"/>
-			<key value="0.18" interpolation="1" row="768"/>
-			<key value="0.5" interpolation="0" row="895"/>
+			<key row="512" value="0" interpolation="1"/>
+			<key row="576" value="-0.4" interpolation="1"/>
+			<key row="640" value="-0.2" interpolation="1"/>
+			<key row="680" value="-0.02" interpolation="1"/>
+			<key row="768" value="0.18" interpolation="1"/>
+			<key row="895" value="0.5" interpolation="0"/>
 		</track>
 		<track name="colorEffectSineWaveHeight">
-			<key value="-0.1" interpolation="1" row="512"/>
-			<key value="0.1" interpolation="1" row="576"/>
-			<key value="0" interpolation="2" row="640"/>
-			<key value="-0.266" interpolation="1" row="768"/>
-			<key value="-0.33" interpolation="0" row="895"/>
+			<key row="512" value="-0.1" interpolation="1"/>
+			<key row="576" value="0.1" interpolation="1"/>
+			<key row="640" value="0" interpolation="3"/>
+			<key row="680" value="-0.266" interpolation="1"/>
+			<key row="768" value="-0.266" interpolation="1"/>
+			<key row="895" value="-0.33" interpolation="0"/>
 		</track>
 		<track name="colorEffectWaterLR">
-			<key value="0.5" interpolation="1" row="512"/>
-			<key value="0.6" interpolation="1" row="576"/>
-			<key value="0.3" interpolation="2" row="640"/>
-			<key value="0.2" interpolation="3" row="768"/>
-			<key value="0.4" interpolation="1" row="784"/>
-			<key value="0.9" interpolation="0" row="895"/>
+			<key row="512" value="0.5" interpolation="1"/>
+			<key row="576" value="0.6" interpolation="1"/>
+			<key row="640" value="0.3" interpolation="2"/>
+			<key row="680" value="0.2" interpolation="3"/>
+			<key row="768" value="0.2" interpolation="3"/>
+			<key row="784" value="0.3" interpolation="1"/>
+			<key row="895" value="0.9" interpolation="0"/>
 		</track>
 		<track name="colorEffectWaterUD">
-			<key value="0.7" interpolation="1" row="512"/>
-			<key value="0.5" interpolation="1" row="576"/>
-			<key value="-0.1" interpolation="1" row="640"/>
-			<key value="0.3" interpolation="3" row="768"/>
-			<key value="0.5" interpolation="0" row="895"/>
+			<key row="512" value="0.7" interpolation="1"/>
+			<key row="576" value="0.5" interpolation="1"/>
+			<key row="640" value="0.3" interpolation="1"/>
+			<key row="680" value="0.3" interpolation="3"/>
+			<key row="768" value="0.3" interpolation="3"/>
+			<key row="895" value="0.5" interpolation="0"/>
+		</track>
+		<track name="colorEffectHueDelta">
+			<key row="640" value="0" interpolation="1"/>
+			<key row="768" value="0.8" interpolation="0"/>
+		</track>
+		<track name="colorEffectFadeout">
+			<key row="511" value="0" interpolation="1"/>
+			<key row="512" value="1" interpolation="0"/>
+			<key row="895" value="1" interpolation="1"/>
+			<key row="896" value="0" interpolation="0"/>
+		</track>
+		<track name="colorEffectSineWave2Width">
+			<key row="640" value="0" interpolation="1"/>
+			<key row="672" value="0" interpolation="1"/>
+			<key row="704" value="0" interpolation="1"/>
+			<key row="736" value="0.05" interpolation="1"/>
+			<key row="768" value="0" interpolation="0"/>
+		</track>
+		<track name="colorEffectSineWave2Height">
+			<key row="640" value="0" interpolation="1"/>
+			<key row="672" value="0.05" interpolation="1"/>
+			<key row="704" value="0" interpolation="1"/>
+			<key row="736" value="0" interpolation="1"/>
+			<key row="768" value="0" interpolation="0"/>
+		</track>
+		<track name="colorEffectTimeSinMult">
+			<key row="512" value="0.05" interpolation="0"/>
 		</track>
 		<track name="cubeContent">
 			<key value="-1" interpolation="2" row="896"/>
