@@ -257,7 +257,7 @@ void boxTunnelEffect() {
   
   float tunnel_cursor = (float) moonlander.getValue("tunnel_cursor");
   if (tunnel_cursor > 0) {
-    translate(0,0,1100 - 2000 * tunnel_cursor * 2);
+    translate(0,0,910 - 2000 * tunnel_cursor);
     rotateX(PI/2 - PI/24);
     rotateY(-PI/12);
     
@@ -820,7 +820,7 @@ void treeEffect() {
   float curParam2 = curParam * curParam;
   
   textSize(100);
-  float fadeout = Math.min(map(curParam, 0.9, 1, 1, 0), 1);
+  float fadeout = Math.min(Math.min(map(curParam, 0.9, 1, 1, 0), map(curParam, 0.0, 0.004, 0, 1)), 1);
   fill(255 * fadeout);
   text(credits, 900 - (textWidth(credits) + 700) * curParam, -300);
   
