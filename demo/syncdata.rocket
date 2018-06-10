@@ -121,7 +121,8 @@
 		</track>
 		<track name="cubeContent">
 			<key row="944" interpolation="0" value="0"/>
-			<key row="1024" interpolation="0" value="1"/>
+			<key row="1020" interpolation="2" value="0"/>
+			<key row="1028" interpolation="0" value="1"/>
 		</track>
 		<track name="cubeArrowSize">
 			<key row="1120" interpolation="1" value="0"/>

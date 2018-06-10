@@ -295,7 +295,7 @@ void cubeEffect() {
   directionalLight(255, 255, 255, 1, 1, -1);
   ambientLight(200, 200, 200);
   
-  int content = moonlander.getIntValue("cubeContent");
+  float content = (float)moonlander.getValue("cubeContent");
   float arrowSize = (float)moonlander.getValue("cubeArrowSize");
   float arrowBling = (float)moonlander.getValue("cubeArrowBling");
   
@@ -319,7 +319,7 @@ void cubeEffect() {
   float measInt = (float)Math.floor(meas);
   float measFrac = meas - measInt;
   
-  if(content == 0) {
+  if(content < 1) {
     for(int i = 0; i < 6; ++i) {
       PGraphics g = graphics[i];
       g.beginDraw();
@@ -332,7 +332,7 @@ void cubeEffect() {
     }
   }
   
-  if(content == 1) {
+  if(content > 0) {
     PVector[][] polygons = new PVector[5][];
     int[][][] triangulation = {
       {{0, 1}, {5, 6}, {6, 0}},
@@ -376,8 +376,6 @@ void cubeEffect() {
         g.loadPixels();
         for(int x = 0; x < g.width; ++x) {
           for(int y = 0; y < g.height; ++y) {
-            g.pixels[x + y * g.width] = #000000;
-            
             float A = (float)x / (float)g.width;
             float B = (float)y / (float)g.width;
             
@@ -453,8 +451,13 @@ void cubeEffect() {
                 }
               }
             }
-              
-            g.pixels[x + y * g.width] = hsvToRgb(hue(fuchsia)/255, saturation(fuchsia)/255, val);
+            
+            color c = hsvToRgb(hue(fuchsia)/255, saturation(fuchsia)/255, val);;
+            if(content == 1) {
+              g.pixels[x + y * g.width] = c;
+            } else {
+              g.pixels[x + y * g.width] = alphaBlend(c, g.pixels[x + y * g.width], content);
+            }
           }
         }
         g.updatePixels();
