@@ -17,10 +17,10 @@ PGraphics graphics[];
 
 String name = "dangling pointer.";
 
-String space = "                                                         ";
+String space = "                                                                  ";
 String credits =
-  "Music: 'Rhinoceros' by Kevin MacLeod (CC BY 3.0). " + space +
-  "Greetings to: all fuksipallerot and n:th year students of Gurula. " + space +
+  "Music: 'Rhinoceros' by Kevin MacLeod (CC BY 3.0) " + space +
+  "Greetings to: all fuksipallerot and n:th year students of Gurula " + space +
 //  "Fuckings to: Alepa Otaniemi for not having PowerKing!" + space +
   "Team Gurula";
 
