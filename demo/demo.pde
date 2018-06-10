@@ -258,6 +258,7 @@ void boxTunnelEffect() {
   float tunnel_cursor = (float) moonlander.getValue("tunnel_cursor");
   if (tunnel_cursor > 0) {
     translate(0,0,910 - 2000 * tunnel_cursor);
+    pointLight(255,255,255, 0,0,-50);
     rotateX(PI/2 - PI/24);
     rotateY(-PI/12);
     
